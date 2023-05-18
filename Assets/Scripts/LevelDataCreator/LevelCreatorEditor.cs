@@ -67,6 +67,7 @@ public class LevelCreatorEditor : Editor
 
         if (EditorGUI.EndChangeCheck())
         {
+            SetCameraOrtographicSize(m_LevelDataCreator.GridCellXCount, m_LevelDataCreator.GridCellYCount);
             m_TempMatchableTypes = new MatchableType[m_LevelDataCreator.GridCellXCount, m_LevelDataCreator.GridCellYCount];
 
             m_LevelDataCreator.MatchableTypes = m_TempMatchableTypes;
@@ -96,6 +97,7 @@ public class LevelCreatorEditor : Editor
 
         if (EditorGUI.EndChangeCheck())
         {
+            SetCameraOrtographicSize(m_LevelDataCreator.GridCellXCount, m_LevelDataCreator.GridCellYCount);
             m_LevelDataCreator.MatchableTypes = m_TempMatchableTypes;
             m_LevelDataCreator.SpawnMatchables();
         }
@@ -105,7 +107,20 @@ public class LevelCreatorEditor : Editor
             m_LevelDataCreator.CreateLevel();
         }
     }
-
+    private float m_TempsCameraSize;
+    private void SetCameraOrtographicSize(int _xSize, int _ySize)
+    {
+        if (_ySize > _xSize)
+        {
+            m_TempsCameraSize = 5.0f;
+            m_TempsCameraSize += (_ySize - 4) / 2.0f;
+        }
+        else
+        {
+            m_TempsCameraSize = _xSize + 1;
+        }
+        Camera.main.orthographicSize = m_TempsCameraSize;
+    }
 }
 #endif
 
