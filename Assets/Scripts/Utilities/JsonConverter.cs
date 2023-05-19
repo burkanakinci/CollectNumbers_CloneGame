@@ -13,7 +13,10 @@ public class JsonConverter : CustomBehaviour
         if (string.IsNullOrEmpty(data))
         {
 
-            _playerData = new PlayerData();
+            _playerData = new PlayerData{
+                PlayerLevel=1,
+                PlayerScore=0,
+            };
 
             SavePlayerData(_playerData);
         }

@@ -1,10 +1,10 @@
 using UnityEngine;
 using System;
 
-[Serializable]
 public class PlayerData
 {
     public int PlayerLevel;
+    public int PlayerScore;
 }
 [Serializable]
 public class MatchableOnCell
@@ -20,10 +20,6 @@ public struct Constant
 public struct ObjectTags
 {
 }
-public struct PooledObjectTags
-{
-    public const string MATCHABLE = "Matchable";
-}
 
 [System.Serializable]
 public struct TargetMatchable
@@ -36,7 +32,9 @@ public class Colors
     public static readonly string[] ColorArray = {
         "#FF0000",
         "#00FF00" ,
-        "#0000FF"
+        "#0000FF",
+        "#FF8000",
+        "#8000FF"
         };
 }
 public enum MatchableType
@@ -44,7 +42,21 @@ public enum MatchableType
     Red = 0,
     Green = 1,
     Blue = 2,
+    Orange=3,
+    Purple=4,
     Random,
+}
+public enum PooledObjectType
+{
+    Matchable=0,
+}
+public enum PlayerStates
+{
+    IdleState = 0,
+    RunState = 1,
+    SuccessState = 2,
+    FailState = 3,
+    GeneralState
 }
 public enum ObjectsLayer
 {
@@ -57,12 +69,20 @@ public enum UIPanelType
     HudPanel = 1,
     FinishPanel = 2,
 }
-
+public enum FinishAreaType
+{
+    RampArea = 0,
+    SuccessArea = 1,
+    FailArea = 2,
+}
 public enum ActiveParents
 {
     MatchableActiveParent = 0,
 }
-
+public enum DeactiveParents
+{
+    MatchableDeactiveParent=0,
+}
 public enum ListOperations
 {
     Adding,

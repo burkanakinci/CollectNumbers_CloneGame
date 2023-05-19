@@ -10,7 +10,7 @@ public class LevelData : ScriptableObject
     public int MovesCount;
     public int GridRowCount;
     public int GridColumnCount;
-    public MatchableOnCell[,] LevelMatchables;
+    public List<MatchableOnCell> LevelMatchables;
     public TargetMatchable[] TargetMatchables;
     #endregion
 }
