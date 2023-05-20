@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-public class PlayerData
+public struct PlayerData
 {
     public int PlayerLevel;
     public int PlayerScore;
@@ -9,22 +9,26 @@ public class PlayerData
 [Serializable]
 public class MatchableOnCell
 {
-    public MatchableType MatchableTypeOnCell;
+    public MatchableColor MatchableColorOnCell;
     public int MatchableXIndis;
     public int MatchableYIndis;
+}
+[Serializable] 
+public struct MatchableType
+{
+    public MatchableColor MatchableColor;
+    public Sprite MatchableSprite;
+    public int MatchableValue;
 }
 public struct Constant
 {
     public const string PLAYER_DATA = "PlayerSavedData";
 }
-public struct ObjectTags
-{
-}
 
 [System.Serializable]
 public struct TargetMatchable
 {
-    public MatchableType TargetMatchableType;
+    public MatchableColor TargetMatchableType;
     public int TargetMatchableCount;
 }
 public class Colors
@@ -34,17 +38,18 @@ public class Colors
         "#00FF00" ,
         "#0000FF",
         "#FF8000",
-        "#8000FF"
+        "#8000FF",
+        "#FFFFFF"
         };
 }
-public enum MatchableType
+public enum MatchableColor
 {
     Red = 0,
     Green = 1,
     Blue = 2,
     Orange=3,
     Purple=4,
-    Random,
+    Random=5,
 }
 public enum PooledObjectType
 {

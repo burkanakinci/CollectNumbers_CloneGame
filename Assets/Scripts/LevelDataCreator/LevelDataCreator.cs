@@ -15,7 +15,7 @@ public class LevelDataCreator : MonoBehaviour
     #region  LevelDataFields
     [HideInInspector] public int LevelNumber;
     [HideInInspector] public int MovesCount;
-    [HideInInspector] public MatchableType[,] MatchableTypes;
+    [HideInInspector] public MatchableColor[,] MatchableTypes;
     [HideInInspector] public int GridCellXCount = 9, GridCellYCount = 9;
     public List<TargetMatchable> TargetMatchables = new List<TargetMatchable>();
     #endregion
@@ -42,7 +42,7 @@ public class LevelDataCreator : MonoBehaviour
             {
                 TempLevelData.LevelMatchables.Add(new MatchableOnCell
                 {
-                    MatchableTypeOnCell = MatchableTypes[_horizontalCount, _verticalCount],
+                    MatchableColorOnCell = MatchableTypes[_horizontalCount, _verticalCount],
                     MatchableXIndis = _horizontalCount,
                     MatchableYIndis = _verticalCount
                 });
@@ -67,7 +67,7 @@ public class LevelDataCreator : MonoBehaviour
         {
             for (int _verticalCount = MatchableTypes.GetLength(1) - 1; _verticalCount >= 0; _verticalCount--)
             {
-                if (MatchableTypes[_horizontalCount, _verticalCount] != MatchableType.Random)
+                if (MatchableTypes[_horizontalCount, _verticalCount] != MatchableColor.Random)
                 {
                     ColorUtility.TryParseHtmlString(Colors.ColorArray[(int)MatchableTypes[_horizontalCount, _verticalCount]], out m_TempSpawnedColor);
                     m_TempSpawnedText = ((int)MatchableTypes[_horizontalCount, _verticalCount] + 1) + "";

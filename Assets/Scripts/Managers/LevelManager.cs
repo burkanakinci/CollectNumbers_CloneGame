@@ -61,17 +61,22 @@ public class LevelManager : CustomBehaviour
     #region Spawn Scene Objects
     private Color m_TempSpawnedMatchableColor;
     private Matchable m_TempSpawnedMatchable;
+    private Vector3 m_TempSpawnedPos = Vector3.zero;
     private void SpawnMatchables()
     {
+        m_TempSpawnedPos.y = GameManager.Instance.CameraManager.CameraSize + GameManager.Instance.CameraManager.CameraPos.y;
         for (int _matchableCount = 0; _matchableCount < m_CurrentLevelData.LevelMatchables.Count; _matchableCount++)
         {
+            m_TempSpawnedPos.x = m_CurrentLevelData.LevelMatchables[_matchableCount].MatchableXIndis;
             m_TempSpawnedMatchable = GameManager.Instance.ObjectPool.SpawnFromPool(
                 PooledObjectType.Matchable,
-                new Vector3(m_CurrentLevelData.LevelMatchables[_matchableCount].MatchableXIndis, m_CurrentLevelData.LevelMatchables[_matchableCount].MatchableYIndis, 0.0f),
+               m_TempSpawnedPos,
                 Quaternion.identity,
                 GameManager.Instance.Entities.GetActiveParent(ActiveParents.MatchableActiveParent)
             ).GetGameObject().GetComponent<Matchable>();
-            m_TempSpawnedMatchable.MatchableVisual.SetMatchableVisual(m_CurrentLevelData.LevelMatchables[_matchableCount].MatchableTypeOnCell);
+            m_TempSpawnedMatchable.SetMatchableType(GameManager.Instance.Entities.GetMatchableType((int)(m_CurrentLevelData.LevelMatchables[_matchableCount].MatchableColorOnCell)));
+            m_TempSpawnedMatchable.SetMatchableCurrentNode(GameManager.Instance.GridManager.GetNode(m_CurrentLevelData.LevelMatchables[_matchableCount].MatchableXIndis, m_CurrentLevelData.LevelMatchables[_matchableCount].MatchableYIndis));
+            m_TempSpawnedMatchable.StartSpawnSequence();
         }
     }
     #endregion

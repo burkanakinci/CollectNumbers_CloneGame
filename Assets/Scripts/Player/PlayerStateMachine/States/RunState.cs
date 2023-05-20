@@ -14,7 +14,7 @@ public class RunState : IPlayerState
 
     public void Enter()
     {
-        //GameManager.Instance.UIManager.GetPanel(UIPanelType.HudPanel).ShowPanel();
+        GameManager.Instance.UIManager.GetPanel(UIPanelType.HudPanel).ShowPanel();
         OnEnterEvent?.Invoke();
     }
     public void UpdateLogic()

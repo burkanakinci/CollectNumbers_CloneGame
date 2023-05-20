@@ -14,11 +14,11 @@ public class IdleState : IPlayerState
 
     public void Enter()
     {
-        //GameManager.Instance.UIManager.GetPanel(UIPanelType.MainMenuPanel).ShowPanel();
         GameManager.Instance.LevelManager.SetLevelNumber(m_Player.PlayerData.PlayerLevel);
-        GameManager.Instance.LevelManager.CreateLevel();
         GameManager.Instance.LevelManager.GetLevelData();
         GameManager.Instance.CameraManager.SetCamera();
+        GameManager.Instance.LevelManager.CreateLevel();
+        GameManager.Instance.UIManager.GetPanel(UIPanelType.MainMenuPanel).ShowPanel();
         OnEnterEvent?.Invoke();
     }
     public void UpdateLogic()

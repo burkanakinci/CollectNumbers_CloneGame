@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using DG.Tweening;
 
 public class MatchableVisual : CustomBehaviour<Matchable>
 {
@@ -10,20 +11,34 @@ public class MatchableVisual : CustomBehaviour<Matchable>
     public override void Initialize(Matchable _cachedComponent)
     {
         base.Initialize(_cachedComponent);
+        m_VisualScaleTweenID = GetInstanceID() + "m_VisualScaleTweenID";
     }
-    public void SetMatchableVisual(MatchableType _matchableType)
+    public void SetMatchableVisual(MatchableColor _matchableColor)
     {
-        SetMatchableColor(Colors.ColorArray[(int)_matchableType]);
-        SetMatchableText((int)_matchableType);
+        SetMatchableSpriteRenderer();
+        SetMatchableText();
     }
-    private Color m_MatchableColor;
-    private void SetMatchableColor(string _colorHex)
+    private Color m_CurrentMatchableColor;
+    private void SetMatchableSpriteRenderer()
     {
-        ColorUtility.TryParseHtmlString(_colorHex, out m_MatchableColor);
-        m_MatchableRenderer.color = m_MatchableColor;
+        ColorUtility.TryParseHtmlString(Colors.ColorArray[(int)CachedComponent.CurrentMatchableType.MatchableColor], out m_CurrentMatchableColor);
+        m_MatchableRenderer.color = m_CurrentMatchableColor;
+        m_MatchableRenderer.sprite = CachedComponent.CurrentMatchableType.MatchableSprite;
     }
-    private void SetMatchableText(int _matchableValue)
+    private void SetMatchableText()
     {
-        m_MatchableValueText.text = (_matchableValue+1).ToString();
+        m_MatchableValueText.text = CachedComponent.CurrentMatchableType.MatchableColor != MatchableColor.Random ? CachedComponent.CurrentMatchableType.MatchableValue.ToString() : "";
+    }
+    private string m_VisualScaleTweenID;
+    public Tween MatchableVisualScaleTween(Vector3 _target,float _duration,Ease _ease)
+    {
+        DOTween.Kill(m_VisualScaleTweenID);
+        return transform.DOScale(_target,_duration)
+        .SetEase(_ease)
+        .SetId(m_VisualScaleTweenID);
+    }
+    public void KillAllTween()
+    {
+        DOTween.Kill(m_VisualScaleTweenID);
     }
 }

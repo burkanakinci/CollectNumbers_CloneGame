@@ -11,8 +11,8 @@ using UnityEditor;
 [CustomEditor(typeof(LevelDataCreator))]
 public class LevelCreatorEditor : Editor
 {
-    private MatchableType[,] m_TempMatchableTypes = new MatchableType[9, 9];
-    private MatchableType m_TempTargetMatchableType = MatchableType.Random;
+    private MatchableColor[,] m_TempMatchableTypes = new MatchableColor[9, 9];
+    private MatchableColor m_TempTargetMatchableType = MatchableColor.Random;
     private int m_TempTargetMatchableCount = 1;
     public override void OnInspectorGUI()
     {
@@ -41,7 +41,7 @@ public class LevelCreatorEditor : Editor
         GUILayout.Space(25);
 
         m_TempTargetMatchableCount = EditorGUILayout.IntField("Target Matchable Count", m_TempTargetMatchableCount);
-        m_TempTargetMatchableType = (MatchableType)EditorGUILayout.EnumPopup("Target Matchable Type", m_TempTargetMatchableType);
+        m_TempTargetMatchableType = (MatchableColor)EditorGUILayout.EnumPopup("Target Matchable Type", m_TempTargetMatchableType);
 
 
 
@@ -68,7 +68,7 @@ public class LevelCreatorEditor : Editor
         if (EditorGUI.EndChangeCheck())
         {
             SetCameraOrtographicSize(m_LevelDataCreator.GridCellXCount, m_LevelDataCreator.GridCellYCount);
-            m_TempMatchableTypes = new MatchableType[m_LevelDataCreator.GridCellXCount, m_LevelDataCreator.GridCellYCount];
+            m_TempMatchableTypes = new MatchableColor[m_LevelDataCreator.GridCellXCount, m_LevelDataCreator.GridCellYCount];
 
             m_LevelDataCreator.MatchableTypes = m_TempMatchableTypes;
             m_LevelDataCreator.SpawnMatchables();
@@ -83,7 +83,7 @@ public class LevelCreatorEditor : Editor
             for (int _horizontalCellSize = 0; _horizontalCellSize < m_LevelDataCreator.GridCellXCount; _horizontalCellSize++)
             {
                 m_TempMatchableTypes[_horizontalCellSize, _verticalCellSize] =
-                    (MatchableType)EditorGUILayout.EnumPopup
+                    (MatchableColor)EditorGUILayout.EnumPopup
                     ("", m_TempMatchableTypes[_horizontalCellSize, _verticalCellSize],
                     GUILayout.Width(75), GUILayout.Height(45));
             }

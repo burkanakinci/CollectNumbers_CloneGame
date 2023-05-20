@@ -6,6 +6,8 @@ using System;
 public class CameraManager : CustomBehaviour
 {
     [SerializeField] private Camera m_MainCamera;
+    public float CameraSize=>m_MainCamera.orthographicSize;
+    public Vector3 CameraPos=>m_MainCamera.gameObject.transform.position;
     public override void Initialize()
     {
     }

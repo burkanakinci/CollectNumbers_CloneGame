@@ -13,98 +13,98 @@ MonoBehaviour:
   m_Name: 1LevelData
   m_EditorClassIdentifier: 
   LevelNumber: 1
-  MovesCount: 0
-  GridRowCount: 6
-  GridColumnCount: 5
+  MovesCount: 2
+  GridRowCount: 5
+  GridColumnCount: 6
   LevelMatchables:
-  - MatchableTypeOnCell: 0
-    MatchableXIndis: 5
-    MatchableYIndis: 4
-  - MatchableTypeOnCell: 0
-    MatchableXIndis: 5
-    MatchableYIndis: 3
-  - MatchableTypeOnCell: 0
-    MatchableXIndis: 5
-    MatchableYIndis: 2
-  - MatchableTypeOnCell: 0
-    MatchableXIndis: 5
-    MatchableYIndis: 1
-  - MatchableTypeOnCell: 0
-    MatchableXIndis: 5
-    MatchableYIndis: 0
-  - MatchableTypeOnCell: 0
+  - MatchableColorOnCell: 0
+    MatchableXIndis: 4
+    MatchableYIndis: 5
+  - MatchableColorOnCell: 0
     MatchableXIndis: 4
     MatchableYIndis: 4
-  - MatchableTypeOnCell: 0
+  - MatchableColorOnCell: 0
     MatchableXIndis: 4
     MatchableYIndis: 3
-  - MatchableTypeOnCell: 0
+  - MatchableColorOnCell: 1
     MatchableXIndis: 4
     MatchableYIndis: 2
-  - MatchableTypeOnCell: 0
+  - MatchableColorOnCell: 4
     MatchableXIndis: 4
     MatchableYIndis: 1
-  - MatchableTypeOnCell: 0
+  - MatchableColorOnCell: 0
     MatchableXIndis: 4
     MatchableYIndis: 0
-  - MatchableTypeOnCell: 0
+  - MatchableColorOnCell: 0
+    MatchableXIndis: 3
+    MatchableYIndis: 5
+  - MatchableColorOnCell: 0
     MatchableXIndis: 3
     MatchableYIndis: 4
-  - MatchableTypeOnCell: 0
+  - MatchableColorOnCell: 2
     MatchableXIndis: 3
     MatchableYIndis: 3
-  - MatchableTypeOnCell: 0
+  - MatchableColorOnCell: 3
     MatchableXIndis: 3
     MatchableYIndis: 2
-  - MatchableTypeOnCell: 0
+  - MatchableColorOnCell: 0
     MatchableXIndis: 3
     MatchableYIndis: 1
-  - MatchableTypeOnCell: 0
+  - MatchableColorOnCell: 0
     MatchableXIndis: 3
     MatchableYIndis: 0
-  - MatchableTypeOnCell: 0
+  - MatchableColorOnCell: 0
+    MatchableXIndis: 2
+    MatchableYIndis: 5
+  - MatchableColorOnCell: 3
     MatchableXIndis: 2
     MatchableYIndis: 4
-  - MatchableTypeOnCell: 0
+  - MatchableColorOnCell: 2
     MatchableXIndis: 2
     MatchableYIndis: 3
-  - MatchableTypeOnCell: 0
+  - MatchableColorOnCell: 0
     MatchableXIndis: 2
     MatchableYIndis: 2
-  - MatchableTypeOnCell: 0
+  - MatchableColorOnCell: 0
     MatchableXIndis: 2
     MatchableYIndis: 1
-  - MatchableTypeOnCell: 0
+  - MatchableColorOnCell: 0
     MatchableXIndis: 2
     MatchableYIndis: 0
-  - MatchableTypeOnCell: 0
+  - MatchableColorOnCell: 4
+    MatchableXIndis: 1
+    MatchableYIndis: 5
+  - MatchableColorOnCell: 1
     MatchableXIndis: 1
     MatchableYIndis: 4
-  - MatchableTypeOnCell: 1
+  - MatchableColorOnCell: 0
     MatchableXIndis: 1
     MatchableYIndis: 3
-  - MatchableTypeOnCell: 3
+  - MatchableColorOnCell: 0
     MatchableXIndis: 1
     MatchableYIndis: 2
-  - MatchableTypeOnCell: 0
+  - MatchableColorOnCell: 0
     MatchableXIndis: 1
     MatchableYIndis: 1
-  - MatchableTypeOnCell: 0
+  - MatchableColorOnCell: 0
     MatchableXIndis: 1
     MatchableYIndis: 0
-  - MatchableTypeOnCell: 0
+  - MatchableColorOnCell: 0
+    MatchableXIndis: 0
+    MatchableYIndis: 5
+  - MatchableColorOnCell: 0
     MatchableXIndis: 0
     MatchableYIndis: 4
-  - MatchableTypeOnCell: 0
+  - MatchableColorOnCell: 0
     MatchableXIndis: 0
     MatchableYIndis: 3
-  - MatchableTypeOnCell: 0
+  - MatchableColorOnCell: 0
     MatchableXIndis: 0
     MatchableYIndis: 2
-  - MatchableTypeOnCell: 0
+  - MatchableColorOnCell: 0
     MatchableXIndis: 0
     MatchableYIndis: 1
-  - MatchableTypeOnCell: 0
+  - MatchableColorOnCell: 0
     MatchableXIndis: 0
     MatchableYIndis: 0
   TargetMatchables: []
