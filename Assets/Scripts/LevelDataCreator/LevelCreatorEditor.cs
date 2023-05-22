@@ -69,7 +69,13 @@ public class LevelCreatorEditor : Editor
         {
             SetCameraOrtographicSize(m_LevelDataCreator.GridCellXCount, m_LevelDataCreator.GridCellYCount);
             m_TempMatchableTypes = new MatchableColor[m_LevelDataCreator.GridCellXCount, m_LevelDataCreator.GridCellYCount];
-
+            for (int _verticalCellSize = m_LevelDataCreator.GridCellYCount - 1; _verticalCellSize >= 0; _verticalCellSize--)
+            {
+                for (int _horizontalCellSize = 0; _horizontalCellSize < m_LevelDataCreator.GridCellXCount; _horizontalCellSize++)
+                {
+                    m_TempMatchableTypes[_horizontalCellSize, _verticalCellSize] = MatchableColor.Random;
+                }
+            }
             m_LevelDataCreator.MatchableTypes = m_TempMatchableTypes;
             m_LevelDataCreator.SpawnMatchables();
         }

@@ -7,6 +7,7 @@ public class Node
 {
     private int m_NodeXIndis;
     private int m_NodeYIndis;
+    public Matchable MatchableOnNode;
 
     public int NodeXIndis => m_NodeXIndis;
     public int NodeYIndis => m_NodeYIndis;

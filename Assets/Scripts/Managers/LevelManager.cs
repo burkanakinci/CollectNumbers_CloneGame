@@ -74,9 +74,24 @@ public class LevelManager : CustomBehaviour
                 Quaternion.identity,
                 GameManager.Instance.Entities.GetActiveParent(ActiveParents.MatchableActiveParent)
             ).GetGameObject().GetComponent<Matchable>();
-            m_TempSpawnedMatchable.SetMatchableType(GameManager.Instance.Entities.GetMatchableType((int)(m_CurrentLevelData.LevelMatchables[_matchableCount].MatchableColorOnCell)));
             m_TempSpawnedMatchable.SetMatchableCurrentNode(GameManager.Instance.GridManager.GetNode(m_CurrentLevelData.LevelMatchables[_matchableCount].MatchableXIndis, m_CurrentLevelData.LevelMatchables[_matchableCount].MatchableYIndis));
-            m_TempSpawnedMatchable.StartSpawnSequence();
+            if (m_CurrentLevelData.LevelMatchables[_matchableCount].MatchableColorOnCell == MatchableColor.Random)
+            {
+                m_TempSpawnedMatchable.SetMatchableType(GameManager.Instance.Entities.GetMatchableType(UnityEngine.Random.Range(0, ((int)MatchableColor.Random))));
+            }
+            else
+            {
+                m_TempSpawnedMatchable.SetMatchableType(GameManager.Instance.Entities.GetMatchableType((int)(m_CurrentLevelData.LevelMatchables[_matchableCount].MatchableColorOnCell)));
+            }
+        }
+        GameManager.Instance.Entities.CheckBlastable();
+        if (GameManager.Instance.Entities.BlastableCount > 0)
+        {
+            CreateLevel();
+        }
+        else
+        {
+            GameManager.Instance.Entities.CompleteSpawn();
         }
     }
     #endregion

@@ -51,6 +51,13 @@ public enum MatchableColor
     Purple=4,
     Random=5,
 }
+public enum NeighbourType
+{
+    Up=0,
+    Down=1,
+    Left=2,
+    Right=3,
+}
 public enum PooledObjectType
 {
     Matchable=0,
@@ -93,3 +100,4 @@ public enum ListOperations
     Adding,
     Substraction,
 }
+

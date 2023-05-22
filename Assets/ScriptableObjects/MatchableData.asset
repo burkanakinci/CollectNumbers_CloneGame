@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SpawnMoveDuration: 1
   m_SpawnMoveEase: 1
-  m_SpawnScaleDuration: 1.2
-  m_SpawnScaleEase: 1
+  m_SpawnScaleDuration: 1
+  m_SpawnScaleEase: 3
