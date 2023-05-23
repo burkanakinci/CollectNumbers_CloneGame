@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 1LevelData
   m_EditorClassIdentifier: 
   LevelNumber: 1
-  MovesCount: 3
+  MovesCount: 7
   GridRowCount: 4
   GridColumnCount: 5
   LevelMatchables:
@@ -77,4 +77,8 @@ MonoBehaviour:
   - MatchableColorOnCell: 5
     MatchableXIndis: 0
     MatchableYIndis: 0
-  TargetMatchables: []
+  TargetMatchables:
+  - TargetMatchableType: 0
+    TargetMatchableCount: 3
+  - TargetMatchableType: 2
+    TargetMatchableCount: 2

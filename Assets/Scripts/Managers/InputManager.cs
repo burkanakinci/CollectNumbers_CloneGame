@@ -11,7 +11,7 @@ public class InputManager : CustomBehaviour
 
     public override void Initialize()
     {
-        m_CanClickable = true;
+        m_CanClickable = false;
         GameManager.Instance.PlayerManager.Player.PlayerStateMachine.GetPlayerState(PlayerStates.RunState).OnEnterEvent += OnGameStartEnter;
         GameManager.Instance.PlayerManager.Player.PlayerStateMachine.GetPlayerState(PlayerStates.RunState).OnExitEvent += OnGameStartExit;
     }
@@ -54,12 +54,9 @@ public class InputManager : CustomBehaviour
 
         if (Physics.Raycast(m_MatchableRay, out m_MatchableHit, Mathf.Infinity, m_CubeLayerMask))
         {
+            m_CanClickable = false;
             m_ClickedMatchable = m_MatchableHit.transform.GetComponent<Matchable>();
             m_ClickedMatchable.ClickedMatchable();
-        }
-        else
-        {
-            Debug.Log("dagildi");
         }
     }
     #region Events

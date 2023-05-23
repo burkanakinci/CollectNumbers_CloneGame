@@ -30,10 +30,11 @@ public class MatchableVisual : CustomBehaviour<Matchable>
         m_MatchableValueText.text = CachedComponent.CurrentMatchableType.MatchableColor != MatchableColor.Random ? CachedComponent.CurrentMatchableType.MatchableValue.ToString() : "";
     }
     private string m_VisualScaleTweenID;
-    public Tween MatchableVisualScaleTween(Vector3 _target,float _duration,Ease _ease)
+    public Tween MatchableVisualScaleTween(Vector3 _target, float _duration, Ease _ease, TweenCallback _onComplete = null)
     {
         DOTween.Kill(m_VisualScaleTweenID);
-        return transform.DOScale(_target,_duration)
+        return transform.DOScale(_target, _duration)
+        .OnComplete(() => { _onComplete?.Invoke(); })
         .SetEase(_ease)
         .SetId(m_VisualScaleTweenID);
     }

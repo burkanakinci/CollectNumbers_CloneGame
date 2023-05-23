@@ -16,6 +16,7 @@ public class LevelManager : CustomBehaviour
     #region ExternalAccess
     public int CurrentRowCount => m_CurrentLevelData.GridRowCount;
     public int CurrentColumnCount => m_CurrentLevelData.GridColumnCount;
+    public TargetMatchable[] CurrentTargetMatcgable { get; private set; }
     #endregion
 
     #region Actions
@@ -34,6 +35,7 @@ public class LevelManager : CustomBehaviour
     {
         OnCleanSceneObject?.Invoke();
         StartSpawnSceneCoroutine();
+        CurrentTargetMatcgable = m_CurrentLevelData.TargetMatchables;
     }
     private Coroutine m_SpawnSceneCoroutine;
     private void StartSpawnSceneCoroutine()
@@ -85,6 +87,20 @@ public class LevelManager : CustomBehaviour
             }
         }
         GameManager.Instance.Entities.CheckBlastable();
+        StartCheckSpawnCorouitne();
+    }
+    private Coroutine m_CheckSpawnCorouitine;
+    private void StartCheckSpawnCorouitne()
+    {
+        if (m_CheckSpawnCorouitine != null)
+        {
+            StopCoroutine(m_CheckSpawnCorouitine);
+        }
+        m_CheckSpawnCorouitine = StartCoroutine(CheckSpawnCoroutine());
+    }
+    private IEnumerator CheckSpawnCoroutine()
+    {
+        yield return new WaitForEndOfFrame();
         if (GameManager.Instance.Entities.BlastableCount > 0)
         {
             CreateLevel();

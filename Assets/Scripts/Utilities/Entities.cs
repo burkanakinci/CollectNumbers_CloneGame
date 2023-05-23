@@ -22,7 +22,6 @@ public class Entities : CustomBehaviour
     #region Events
     public event Action OnCompleteSpawn;
     public event Action OnCheckBlast;
-    public event Action OnBlastMatchables;
     #endregion
     public override void Initialize()
     {

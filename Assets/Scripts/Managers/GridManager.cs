@@ -24,7 +24,7 @@ public class GridManager : CustomBehaviour
 
     public Node GetNode(int _xIndis, int _yIndis)
     {
-        if ((_xIndis < 0) || (_yIndis < 0) || (_xIndis > GameManager.Instance.LevelManager.CurrentRowCount) || (_yIndis > GameManager.Instance.LevelManager.CurrentColumnCount))
+        if ((_xIndis < 0) || (_yIndis < 0) || (_xIndis >= GameManager.Instance.LevelManager.CurrentRowCount) || (_yIndis >= GameManager.Instance.LevelManager.CurrentColumnCount))
         {
             return null;
         }

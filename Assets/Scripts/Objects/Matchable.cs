@@ -9,11 +9,11 @@ public class Matchable : PooledObject
     [SerializeField] private MatchableData m_MatchableData;
     public MatchableType CurrentMatchableType { get; private set; }
     [SerializeField] private Node m_CurrentNode;
-    private Matchable[] m_NeighbourMatchables;
+    private Node[] m_NeighbourNodes;
     public override void Initialize()
     {
         m_MatchableVisual.Initialize(this);
-        m_NeighbourMatchables = new Matchable[4];
+        m_NeighbourNodes = new Node[4];
         m_SpawnSequenceID = GetInstanceID() + "m_SpawnSequenceID";
         m_MatchableMoveTweenID = GetInstanceID() + "m_MatchableMoveTweenID";
         m_StartSpawnSequenceDelayID = GetInstanceID() + "m_StartSpawnSequenceDelayID";
@@ -23,14 +23,15 @@ public class Matchable : PooledObject
         base.OnObjectSpawn();
         m_MatchableVisual.transform.localScale = Vector3.zero;
         GameManager.Instance.Entities.OnCheckBlast += CheckBlastable;
-        GameManager.Instance.Entities.OnCompleteSpawn+=StartSpawnSequence;
+        GameManager.Instance.Entities.OnCompleteSpawn += StartSpawnSequence;
     }
     public override void OnObjectDeactive()
     {
         KillAllTween();
         m_MatchableVisual.KillAllTween();
         GameManager.Instance.Entities.OnCheckBlast -= CheckBlastable;
-        GameManager.Instance.Entities.OnCompleteSpawn+=StartSpawnSequence;
+        GameManager.Instance.Entities.OnCompleteSpawn -= StartSpawnSequence;
+        GameManager.Instance.Entities.SetBlastedMatchables(ListOperations.Substraction, this);
         base.OnObjectDeactive();
     }
     public void SetMatchableType(MatchableType _matchableType)
@@ -42,13 +43,14 @@ public class Matchable : PooledObject
     {
         m_CurrentNode = _node;
         m_CurrentNode.MatchableOnNode = this;
+        SetNeighbourNodes();
     }
-    private void SetNeighbours()
+    private void SetNeighbourNodes()
     {
-        m_NeighbourMatchables[(int)NeighbourType.Up] = GameManager.Instance.GridManager.GetNode(m_CurrentNode.NodeXIndis, m_CurrentNode.NodeYIndis + 1).MatchableOnNode;
-        m_NeighbourMatchables[(int)NeighbourType.Down] = GameManager.Instance.GridManager.GetNode(m_CurrentNode.NodeXIndis, m_CurrentNode.NodeYIndis - 1).MatchableOnNode;
-        m_NeighbourMatchables[(int)NeighbourType.Left] = GameManager.Instance.GridManager.GetNode(m_CurrentNode.NodeXIndis - 1, m_CurrentNode.NodeYIndis).MatchableOnNode;
-        m_NeighbourMatchables[(int)NeighbourType.Right] = GameManager.Instance.GridManager.GetNode(m_CurrentNode.NodeXIndis + 1, m_CurrentNode.NodeYIndis).MatchableOnNode;
+        m_NeighbourNodes[0] = GameManager.Instance.GridManager.GetNode(m_CurrentNode.NodeXIndis, m_CurrentNode.NodeYIndis + 1);
+        m_NeighbourNodes[1] = GameManager.Instance.GridManager.GetNode(m_CurrentNode.NodeXIndis, m_CurrentNode.NodeYIndis - 1);
+        m_NeighbourNodes[2] = GameManager.Instance.GridManager.GetNode(m_CurrentNode.NodeXIndis - 1, m_CurrentNode.NodeYIndis);
+        m_NeighbourNodes[3] = GameManager.Instance.GridManager.GetNode(m_CurrentNode.NodeXIndis + 1, m_CurrentNode.NodeYIndis);
     }
     public void ClickedMatchable()
     {
@@ -59,14 +61,16 @@ public class Matchable : PooledObject
         else
         {
             SetMatchableType(GameManager.Instance.Entities.GetMatchableType((int)CurrentMatchableType.MatchableColor + 1));
+            GameManager.Instance.Entities.CheckBlastable();
         }
     }
     #region SpawnTween 
     private string m_MatchableMoveTweenID;
-    public Tween MoveMatchable(Vector3 _targetPos, float _duration, Ease _ease)
+    public Tween MoveMatchable(Vector3 _targetPos, float _duration, Ease _ease, TweenCallback _onComplete = null)
     {
         DOTween.Kill(m_MatchableMoveTweenID);
         return transform.DOMove(_targetPos, _duration)
+        .OnComplete(() => { _onComplete?.Invoke(); })
         .SetEase(_ease)
         .SetId(m_MatchableMoveTweenID);
     }
@@ -85,35 +89,43 @@ public class Matchable : PooledObject
     private void SpawnSequence()
     {
         DOTween.Kill(m_SpawnSequenceID);
-        m_SpawnSequence.Append(MoveMatchable(m_CurrentNode.GetNodePosition(), m_MatchableData.SpawnMoveDuration, m_MatchableData.SpawnMoveEase));
+        m_SpawnSequence.Append(MoveMatchable(m_CurrentNode.GetNodePosition(), m_MatchableData.SpawnMoveDuration, m_MatchableData.SpawnMoveEase, StartGameByMatchable));
         m_SpawnSequence.Join(m_MatchableVisual.MatchableVisualScaleTween(Vector3.one, m_MatchableData.SpawnScaleDuration, m_MatchableData.SpawnScaleEase));
     }
     #endregion
 
+    private void StartGameByMatchable()
+    {
+        if (m_CurrentNode.NodeXIndis == GameManager.Instance.LevelManager.CurrentRowCount - 1 && m_CurrentNode.NodeYIndis == GameManager.Instance.LevelManager.CurrentColumnCount - 1)
+        {
+            GameManager.Instance.GameStart();
+        }
+    }
+
     private void CheckBlastable()
     {
-        if (m_NeighbourMatchables[(int)NeighbourType.Up] != null && m_NeighbourMatchables[(int)NeighbourType.Down] != null)
+        if (m_NeighbourNodes[(int)NeighbourType.Up] != null && m_NeighbourNodes[(int)NeighbourType.Down] != null)
         {
-            if (m_NeighbourMatchables[(int)NeighbourType.Up].CurrentMatchableType.MatchableColor == CurrentMatchableType.MatchableColor && m_NeighbourMatchables[(int)NeighbourType.Down].CurrentMatchableType.MatchableColor == CurrentMatchableType.MatchableColor)
+            if (m_NeighbourNodes[(int)NeighbourType.Up].MatchableOnNode.CurrentMatchableType.MatchableColor == CurrentMatchableType.MatchableColor && m_NeighbourNodes[(int)NeighbourType.Down].MatchableOnNode.CurrentMatchableType.MatchableColor == CurrentMatchableType.MatchableColor)
             {
                 GameManager.Instance.Entities.SetBlastedMatchables(ListOperations.Adding, this);
-                GameManager.Instance.Entities.SetBlastedMatchables(ListOperations.Adding, m_NeighbourMatchables[(int)NeighbourType.Up]);
-                GameManager.Instance.Entities.SetBlastedMatchables(ListOperations.Adding, m_NeighbourMatchables[(int)NeighbourType.Down]);
+                GameManager.Instance.Entities.SetBlastedMatchables(ListOperations.Adding, m_NeighbourNodes[(int)NeighbourType.Up].MatchableOnNode);
+                GameManager.Instance.Entities.SetBlastedMatchables(ListOperations.Adding, m_NeighbourNodes[(int)NeighbourType.Down].MatchableOnNode);
             }
         }
-        if (m_NeighbourMatchables[(int)NeighbourType.Left] != null && m_NeighbourMatchables[(int)NeighbourType.Right] != null)
+        if (m_NeighbourNodes[(int)NeighbourType.Left] != null && m_NeighbourNodes[(int)NeighbourType.Right] != null)
         {
-            if (m_NeighbourMatchables[(int)NeighbourType.Left].CurrentMatchableType.MatchableColor == CurrentMatchableType.MatchableColor && m_NeighbourMatchables[(int)NeighbourType.Right].CurrentMatchableType.MatchableColor == CurrentMatchableType.MatchableColor)
+            if (m_NeighbourNodes[(int)NeighbourType.Left].MatchableOnNode.CurrentMatchableType.MatchableColor == CurrentMatchableType.MatchableColor && m_NeighbourNodes[(int)NeighbourType.Right].MatchableOnNode.CurrentMatchableType.MatchableColor == CurrentMatchableType.MatchableColor)
             {
                 GameManager.Instance.Entities.SetBlastedMatchables(ListOperations.Adding, this);
-                GameManager.Instance.Entities.SetBlastedMatchables(ListOperations.Adding, m_NeighbourMatchables[(int)NeighbourType.Left]);
-                GameManager.Instance.Entities.SetBlastedMatchables(ListOperations.Adding, m_NeighbourMatchables[(int)NeighbourType.Right]);
+                GameManager.Instance.Entities.SetBlastedMatchables(ListOperations.Adding, m_NeighbourNodes[(int)NeighbourType.Left].MatchableOnNode);
+                GameManager.Instance.Entities.SetBlastedMatchables(ListOperations.Adding, m_NeighbourNodes[(int)NeighbourType.Right].MatchableOnNode);
             }
         }
     }
     public void BlastMatchable()
     {
-        
+
     }
     private void KillAllTween()
     {
