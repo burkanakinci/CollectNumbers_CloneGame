@@ -22,11 +22,12 @@ public class LevelManager : CustomBehaviour
 
     #region Actions
     public event Action OnCleanSceneObject;
+    public event Action<int> OnChangeMoveCount;
     #endregion
     public override void Initialize()
     {
         m_MaxLevelDataCount = Resources.LoadAll("LevelDatas", typeof(LevelData)).Length;
-        GameManager.Instance.InputManager.OnClicked += DecreaseRemaingMoveCount;
+        GameManager.Instance.InputManager.OnClicked+=DecreaseMoveCount;
     }
     public void SetLevelNumber(int _levelNumber)
     {
@@ -36,7 +37,7 @@ public class LevelManager : CustomBehaviour
     public void CreateLevel()
     {
         CurrentTargetMatcgables = m_CurrentLevelData.TargetMatchables;
-        RemainingMoveCount = m_CurrentLevelData.MovesCount;
+        ChangeMoveCount(m_CurrentLevelData.MovesCount);
         OnCleanSceneObject?.Invoke();
         StartSpawnSceneCoroutine();
     }
@@ -114,13 +115,17 @@ public class LevelManager : CustomBehaviour
         }
     }
     #endregion
-
-    private void DecreaseRemaingMoveCount()
+    private void ChangeMoveCount(int _count)
     {
-        RemainingMoveCount--;
+        RemainingMoveCount = _count;
+        OnChangeMoveCount?.Invoke(RemainingMoveCount);
+    }
+    private void DecreaseMoveCount()
+    {
+        ChangeMoveCount(RemainingMoveCount - 1);
     }
     private void OnDestroy()
     {
-        GameManager.Instance.InputManager.OnClicked -= DecreaseRemaingMoveCount;
+        GameManager.Instance.InputManager.OnClicked-=DecreaseMoveCount;
     }
 }

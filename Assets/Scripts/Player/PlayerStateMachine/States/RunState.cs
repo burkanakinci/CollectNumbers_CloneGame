@@ -14,11 +14,8 @@ public class RunState : IPlayerState
 
     public void Enter()
     {
-        if (GameManager.Instance.LevelManager.RemainingMoveCount > 0)
-        {
-            GameManager.Instance.UIManager.GetPanel(UIPanelType.HudPanel).ShowPanel();
-            OnEnterEvent?.Invoke();
-        }
+        GameManager.Instance.UIManager.GetPanel(UIPanelType.HudPanel).ShowPanel();
+        OnEnterEvent?.Invoke();
     }
     public void UpdateLogic()
     {
