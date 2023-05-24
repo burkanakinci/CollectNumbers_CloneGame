@@ -64,12 +64,32 @@ public class Entities : CustomBehaviour
         }
     }
     #endregion
+    private Coroutine m_CheckBlastableCoroutine;
     public void CheckBlastable()
     {
+        if (m_CheckBlastableCoroutine != null)
+        {
+            StopCoroutine(m_CheckBlastableCoroutine);
+        }
+        m_CheckBlastableCoroutine = StartCoroutine(CheckBlastableCoroutine());
+    }
+    private IEnumerator CheckBlastableCoroutine()
+    {
+        yield return new WaitForEndOfFrame();
         OnCheckBlast?.Invoke();
     }
+    private Coroutine m_BlastMatchablesCoroutine;
     public void BlastMatchables()
     {
+        if (m_BlastMatchablesCoroutine != null)
+        {
+            StopCoroutine(m_BlastMatchablesCoroutine);
+        }
+        m_BlastMatchablesCoroutine = StartCoroutine(BlastMatchablesCoroutine());
+    }
+    private IEnumerator BlastMatchablesCoroutine()
+    {
+        yield return new WaitForEndOfFrame();
         OnBlastMatchables?.Invoke();
     }
     public void CompleteSpawn()
