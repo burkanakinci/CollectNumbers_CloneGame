@@ -12,18 +12,30 @@ public class TargetMatchableArea : UIArea
         {
             m_Targets[_count].Initialize(CachedComponent);
         }
+        GameManager.Instance.LevelManager.OnChangeTargetMatchable += SetTargets;
     }
-    public void SetTargets()
+    public override void ShowArea()
+    {
+        base.ShowArea();
+    }
+    public override void HideArea()
     {
         for (int _count = 0; _count < m_Targets.Length; _count++)
         {
-            if (_count >= GameManager.Instance.LevelManager.CurrentTargetMatcgables.Length)
-            {
-                m_Targets[_count].HideArea();
-                return;
-            }
-            m_Targets[_count].ShowArea();
-            m_Targets[_count].SetTarget(GameManager.Instance.LevelManager.CurrentTargetMatcgables[_count].TargetMatchableType, GameManager.Instance.LevelManager.CurrentTargetMatcgables[_count].TargetMatchableCount);
+            m_Targets[_count].HideArea();
         }
+        base.HideArea();
+    }
+    public void SetTargets(List<TargetMatchable> _targets)
+    {
+        for (int _count = 0; _count < _targets.Count; _count++)
+        {
+            m_Targets[_count].ShowArea();
+            m_Targets[_count].SetTarget(_targets[_count].TargetMatchableColor, _targets[_count].TargetMatchableCount);
+        }
+    }
+    private void OnDestroy()
+    {
+        GameManager.Instance.LevelManager.OnChangeTargetMatchable -= SetTargets;
     }
 }

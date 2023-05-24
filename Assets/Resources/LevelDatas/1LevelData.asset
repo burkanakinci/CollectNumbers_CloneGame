@@ -78,7 +78,7 @@ MonoBehaviour:
     MatchableXIndis: 0
     MatchableYIndis: 0
   TargetMatchables:
-  - TargetMatchableType: 0
-    TargetMatchableCount: 3
-  - TargetMatchableType: 2
-    TargetMatchableCount: 2
+  - TargetMatchableColor: 3
+    TargetMatchableCount: 10
+  - TargetMatchableColor: 4
+    TargetMatchableCount: 20

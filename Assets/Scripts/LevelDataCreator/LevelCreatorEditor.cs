@@ -49,7 +49,7 @@ public class LevelCreatorEditor : Editor
         {
             m_LevelDataCreator.TargetMatchables.Add(new TargetMatchable
             {
-                TargetMatchableType = m_TempTargetMatchableType,
+                TargetMatchableColor = m_TempTargetMatchableType,
                 TargetMatchableCount = m_TempTargetMatchableCount
             });
         }

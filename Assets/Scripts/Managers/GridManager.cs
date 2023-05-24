@@ -46,7 +46,7 @@ public class GridManager : CustomBehaviour
     }
     private IEnumerator FillNodesCoroutine()
     {
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.08f);
         for (int _row = 0; _row < GameManager.Instance.LevelManager.CurrentRowCount; _row++)
         {
             for (int _column = 0; _column < GameManager.Instance.LevelManager.CurrentColumnCount; _column++)
@@ -54,6 +54,7 @@ public class GridManager : CustomBehaviour
                 if (GetNode(_row, _column).MatchableOnNode == null)
                 {
                     GetNode(_row, _column).FillNode();
+                    StartFillEmptyNodes();
                     yield return null;
                 }
             }

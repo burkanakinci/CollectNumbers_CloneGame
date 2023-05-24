@@ -380,10 +380,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CanvasGroup: {fileID: 24631755}
-  m_PanelAreas: []
+  m_PanelAreas:
+  - {fileID: 1820609129}
+  - {fileID: 871310864}
   m_LevelText: {fileID: 7420557}
-  m_TargetMatchableArea: {fileID: 1820609129}
-  m_MoveArea: {fileID: 871310864}
 --- !u!1 &92039425
 GameObject:
   m_ObjectHideFlags: 0
@@ -637,6 +637,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4aa09d78e1964a4fae3900b61d90bd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GridNodes: []
 --- !u!1 &485241503
 GameObject:
   m_ObjectHideFlags: 0
@@ -930,6 +931,10 @@ PrefabInstance:
     - target: {fileID: 7068055515298228757, guid: afd45766eff327d409ba41e7c7aa8221, type: 3}
       propertyPath: m_Name
       value: TargetArea3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7068055515315203280, guid: afd45766eff327d409ba41e7c7aa8221, type: 3}
+      propertyPath: m_text
+      value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: afd45766eff327d409ba41e7c7aa8221, type: 3}
@@ -1341,6 +1346,10 @@ PrefabInstance:
     - target: {fileID: 7068055515298228757, guid: afd45766eff327d409ba41e7c7aa8221, type: 3}
       propertyPath: m_Name
       value: TargetArea2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7068055515315203280, guid: afd45766eff327d409ba41e7c7aa8221, type: 3}
+      propertyPath: m_text
+      value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: afd45766eff327d409ba41e7c7aa8221, type: 3}
@@ -2417,6 +2426,22 @@ PrefabInstance:
     - target: {fileID: 7068055515298228757, guid: afd45766eff327d409ba41e7c7aa8221, type: 3}
       propertyPath: m_Name
       value: TargetArea1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7068055515315203280, guid: afd45766eff327d409ba41e7c7aa8221, type: 3}
+      propertyPath: m_text
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7068055517111914166, guid: afd45766eff327d409ba41e7c7aa8221, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7068055517111914166, guid: afd45766eff327d409ba41e7c7aa8221, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7068055517111914166, guid: afd45766eff327d409ba41e7c7aa8221, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: afd45766eff327d409ba41e7c7aa8221, type: 3}

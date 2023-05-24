@@ -26,7 +26,7 @@ public class MatchableVisual : CustomBehaviour<Matchable>
     private string m_ColorChangeTweenID;
     private void SetMatchableSpriteRenderer()
     {
-        ColorUtility.TryParseHtmlString(Colors.ColorArray[(int)CachedComponent.CurrentMatchableType.MatchableColor], out m_CurrentMatchableColor);
+        m_CurrentMatchableColor = Colors.GetColor(CachedComponent.CurrentMatchableType.MatchableColor);
         m_PrevColor = m_MatchableRenderer.color;
         m_MatchableRenderer.sprite = CachedComponent.CurrentMatchableType.MatchableSprite;
         SetColorTween();

@@ -17,8 +17,6 @@ public class GameManager : MonoBehaviour
     #region Actions
     public event Action OnResetToMainMenu;
     public event Action OnGameStart;
-    public event Action OnHole;
-    public event Action OnRamp;
     public event Action OnLevelSuccess;
     public event Action OnLevelFailed;
     #endregion
@@ -60,14 +58,6 @@ public class GameManager : MonoBehaviour
     public void GameStart()
     {
         OnGameStart?.Invoke();
-    }
-    public void Hole()
-    {
-        OnHole?.Invoke();
-    }
-    public void Ramp()
-    {
-        OnRamp?.Invoke();
     }
     public void LevelSuccess()
     {

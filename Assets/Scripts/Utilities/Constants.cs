@@ -1,5 +1,7 @@
 using UnityEngine;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
 public struct PlayerData
 {
@@ -13,7 +15,7 @@ public class MatchableOnCell
     public int MatchableXIndis;
     public int MatchableYIndis;
 }
-[Serializable] 
+[Serializable]
 public struct MatchableType
 {
     public MatchableColor MatchableColor;
@@ -28,39 +30,43 @@ public struct Constant
 [System.Serializable]
 public struct TargetMatchable
 {
-    public MatchableColor TargetMatchableType;
+    public MatchableColor TargetMatchableColor;
     public int TargetMatchableCount;
 }
 public class Colors
 {
-    public static readonly string[] ColorArray = {
-        "#FF0000",
-        "#00FF00" ,
-        "#0000FF",
-        "#FF8000",
-        "#8000FF",
-        "#FFFFFF"
+    public static readonly Vector4[] ColorArray = {
+        new Vector4(1.0f,0.0f,0.0f,1.0f),
+        new Vector4(0.0f,1.0f,0.0f,1.0f),
+        new Vector4(0.0f,0.0f,1.0f,1.0f),
+        new Vector4(1.0f,0.5f,0.0f,1.0f),
+        new Vector4(0.5f,0.0f,1.0f,1.0f),
+        new Vector4(1.0f,1.0f,1.0f,1.0f)
         };
+    public static Color GetColor(MatchableColor _color)
+    {
+        return new Color(Colors.ColorArray[(int)_color].x, Colors.ColorArray[(int)_color].y, Colors.ColorArray[(int)_color].z, Colors.ColorArray[(int)_color].w);
+    }
 }
 public enum MatchableColor
 {
     Red = 0,
     Green = 1,
     Blue = 2,
-    Orange=3,
-    Purple=4,
-    Random=5,
+    Orange = 3,
+    Purple = 4,
+    Random = 5,
 }
 public enum NeighbourType
 {
-    Up=0,
-    Down=1,
-    Left=2,
-    Right=3,
+    Up = 0,
+    Down = 1,
+    Left = 2,
+    Right = 3,
 }
 public enum PooledObjectType
 {
-    Matchable=0,
+    Matchable = 0,
 }
 public enum PlayerStates
 {
@@ -93,7 +99,7 @@ public enum ActiveParents
 }
 public enum DeactiveParents
 {
-    MatchableDeactiveParent=0,
+    MatchableDeactiveParent = 0,
 }
 public enum ListOperations
 {

@@ -51,6 +51,5 @@ public class Node
         MatchableOnNode.SetMatchableCurrentNode(this);
         MatchableOnNode.SetMatchableType(GameManager.Instance.Entities.GetMatchableType(UnityEngine.Random.Range(0, ((int)MatchableColor.Random))));
         MatchableOnNode.SpawnSequence();
-        GameManager.Instance.GridManager.StartFillEmptyNodes();
     }
 }

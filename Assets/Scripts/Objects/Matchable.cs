@@ -151,6 +151,7 @@ public class Matchable : PooledObject
     }
     public void BlastMatchable()
     {
+        GameManager.Instance.LevelManager.DecreaseTargetMatchable(this);
         OnObjectDeactive();
     }
     private void KillAllTween()

@@ -9,15 +9,13 @@ public static class Utilities
         canvas.blocksRaycasts = true;
         canvas.interactable = true;
     }
-
     public static void Close(this CanvasGroup canvas)
     {
         canvas.alpha = 0;
         canvas.blocksRaycasts = false;
         canvas.interactable = false;
     }
-
-    public static Vector2 RandomPosInsideCircle( float _radius)
+    public static Vector2 RandomPosInsideCircle(float _radius)
     {
         return (UnityEngine.Random.insideUnitCircle * _radius);
     }

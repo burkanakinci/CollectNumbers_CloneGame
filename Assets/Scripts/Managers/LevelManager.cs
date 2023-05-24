@@ -1,5 +1,5 @@
-
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,18 +16,19 @@ public class LevelManager : CustomBehaviour
     #region ExternalAccess
     public int CurrentRowCount => m_CurrentLevelData.GridRowCount;
     public int CurrentColumnCount => m_CurrentLevelData.GridColumnCount;
-    public TargetMatchable[] CurrentTargetMatcgables { get; private set; }
+    public List<TargetMatchable> CurrentTargetMatchables { get; private set; }
     public int RemainingMoveCount { get; private set; }
     #endregion
 
     #region Actions
     public event Action OnCleanSceneObject;
     public event Action<int> OnChangeMoveCount;
+    public event Action<List<TargetMatchable>> OnChangeTargetMatchable;
     #endregion
     public override void Initialize()
     {
         m_MaxLevelDataCount = Resources.LoadAll("LevelDatas", typeof(LevelData)).Length;
-        GameManager.Instance.InputManager.OnClicked+=DecreaseMoveCount;
+        GameManager.Instance.InputManager.OnClicked += DecreaseMoveCount;
     }
     public void SetLevelNumber(int _levelNumber)
     {
@@ -36,7 +37,8 @@ public class LevelManager : CustomBehaviour
     }
     public void CreateLevel()
     {
-        CurrentTargetMatcgables = m_CurrentLevelData.TargetMatchables;
+        CurrentTargetMatchables = m_CurrentLevelData.TargetMatchables.ToList();
+        OnChangeTargetMatchable?.Invoke(CurrentTargetMatchables);
         ChangeMoveCount(m_CurrentLevelData.MovesCount);
         OnCleanSceneObject?.Invoke();
         StartSpawnSceneCoroutine();
@@ -124,8 +126,32 @@ public class LevelManager : CustomBehaviour
     {
         ChangeMoveCount(RemainingMoveCount - 1);
     }
+    public void DecreaseTargetMatchable(Matchable _matchable)
+    {
+        for (int _target = 0; _target < CurrentTargetMatchables.Count; _target++)
+        {
+            if (_matchable.CurrentMatchableType.MatchableColor == CurrentTargetMatchables[_target].TargetMatchableColor &&
+            CurrentTargetMatchables[_target].TargetMatchableCount > 0)
+            {
+                CurrentTargetMatchables[_target] = new TargetMatchable
+                {
+                    TargetMatchableColor = CurrentTargetMatchables[_target].TargetMatchableColor,
+                    TargetMatchableCount = CurrentTargetMatchables[_target].TargetMatchableCount - 1,
+                };
+                OnChangeTargetMatchable?.Invoke(CurrentTargetMatchables);
+            }
+        }
+        for (int _target = 0; _target < CurrentTargetMatchables.Count; _target++)
+        {
+            if (CurrentTargetMatchables[_target].TargetMatchableCount > 0)
+            {
+                return;
+            }
+        }
+        GameManager.Instance.LevelSuccess();
+    }
     private void OnDestroy()
     {
-        GameManager.Instance.InputManager.OnClicked-=DecreaseMoveCount;
+        GameManager.Instance.InputManager.OnClicked -= DecreaseMoveCount;
     }
 }

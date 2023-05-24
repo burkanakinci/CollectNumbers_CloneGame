@@ -69,7 +69,7 @@ public class LevelDataCreator : MonoBehaviour
             {
                 if (MatchableTypes[_horizontalCount, _verticalCount] != MatchableColor.Random)
                 {
-                    ColorUtility.TryParseHtmlString(Colors.ColorArray[(int)MatchableTypes[_horizontalCount, _verticalCount]], out m_TempSpawnedColor);
+                    m_TempSpawnedColor = Colors.GetColor(MatchableTypes[_horizontalCount, _verticalCount]);
                     m_TempSpawnedText = ((int)MatchableTypes[_horizontalCount, _verticalCount] + 1) + "";
                 }
                 else

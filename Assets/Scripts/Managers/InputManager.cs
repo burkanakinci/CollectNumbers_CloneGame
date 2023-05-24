@@ -59,19 +59,23 @@ public class InputManager : CustomBehaviour
 
         if (Physics.Raycast(m_MatchableRay, out m_MatchableHit, Mathf.Infinity, m_CubeLayerMask))
         {
-            m_CanClickable = false;
+            SetCanClickable(false);
             m_ClickedMatchable = m_MatchableHit.transform.GetComponent<Matchable>();
             m_ClickedMatchable.ClickedMatchable();
         }
     }
+    public void SetCanClickable(bool _clickable)
+    {
+        m_CanClickable = _clickable;
+    }
     #region Events
     private void OnGameStartEnter()
     {
-        m_CanClickable = true;
+        SetCanClickable(true);
     }
     private void OnGameStartExit()
     {
-        m_CanClickable = false;
+        SetCanClickable(false);
     }
     private void OnDestroy()
     {
