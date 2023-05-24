@@ -33,9 +33,30 @@ public class GridManager : CustomBehaviour
             return m_NodesOnGrid[_xIndis, _yIndis];
         }
     }
-
-    public bool NodeIsNeighbour(Node _node1, Node _node2)
+    private Coroutine m_FillNodesCoroutine;
+    public void StartFillEmptyNodes()
     {
-        return true;
+        if (m_FillNodesCoroutine != null)
+        {
+            StopCoroutine(m_FillNodesCoroutine);
+        }
+        m_FillNodesCoroutine = StartCoroutine(FillNodesCoroutine());
+    }
+    private IEnumerator FillNodesCoroutine()
+    {
+        yield return new WaitForEndOfFrame();
+        for (int _row = 0; _row < GameManager.Instance.LevelManager.CurrentRowCount; _row++)
+        {
+            for (int _column = 0; _column < GameManager.Instance.LevelManager.CurrentColumnCount; _column++)
+            {
+                if (GetNode(_row, _column).MatchableOnNode == null)
+                {
+                    GetNode(_row, _column).FillNode();
+                    yield return null;
+                }
+            }
+        }
+        GameManager.Instance.Entities.CheckBlastable();
+        GameManager.Instance.Entities.BlastMatchables();
     }
 }

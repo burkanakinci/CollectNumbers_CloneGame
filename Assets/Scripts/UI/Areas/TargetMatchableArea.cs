@@ -17,13 +17,13 @@ public class TargetMatchableArea : UIArea
     {
         for (int _count = 0; _count < m_Targets.Length; _count++)
         {
-            if (_count >= GameManager.Instance.LevelManager.CurrentTargetMatcgable.Length)
+            if (_count >= GameManager.Instance.LevelManager.CurrentTargetMatcgables.Length)
             {
                 m_Targets[_count].HideArea();
                 return;
             }
             m_Targets[_count].ShowArea();
-            m_Targets[_count].SetTarget(GameManager.Instance.LevelManager.CurrentTargetMatcgable[_count].TargetMatchableType, GameManager.Instance.LevelManager.CurrentTargetMatcgable[_count].TargetMatchableCount);
+            m_Targets[_count].SetTarget(GameManager.Instance.LevelManager.CurrentTargetMatcgables[_count].TargetMatchableType, GameManager.Instance.LevelManager.CurrentTargetMatcgables[_count].TargetMatchableCount);
         }
     }
 }

@@ -16,7 +16,8 @@ public class LevelManager : CustomBehaviour
     #region ExternalAccess
     public int CurrentRowCount => m_CurrentLevelData.GridRowCount;
     public int CurrentColumnCount => m_CurrentLevelData.GridColumnCount;
-    public TargetMatchable[] CurrentTargetMatcgable { get; private set; }
+    public TargetMatchable[] CurrentTargetMatcgables { get; private set; }
+    public int RemainingMoveCount { get; private set; }
     #endregion
 
     #region Actions
@@ -25,6 +26,7 @@ public class LevelManager : CustomBehaviour
     public override void Initialize()
     {
         m_MaxLevelDataCount = Resources.LoadAll("LevelDatas", typeof(LevelData)).Length;
+        GameManager.Instance.InputManager.OnClicked += DecreaseRemaingMoveCount;
     }
     public void SetLevelNumber(int _levelNumber)
     {
@@ -33,9 +35,10 @@ public class LevelManager : CustomBehaviour
     }
     public void CreateLevel()
     {
+        CurrentTargetMatcgables = m_CurrentLevelData.TargetMatchables;
+        RemainingMoveCount = m_CurrentLevelData.MovesCount;
         OnCleanSceneObject?.Invoke();
         StartSpawnSceneCoroutine();
-        CurrentTargetMatcgable = m_CurrentLevelData.TargetMatchables;
     }
     private Coroutine m_SpawnSceneCoroutine;
     private void StartSpawnSceneCoroutine()
@@ -66,7 +69,7 @@ public class LevelManager : CustomBehaviour
     private Vector3 m_TempSpawnedPos = Vector3.zero;
     private void SpawnMatchables()
     {
-        m_TempSpawnedPos.y = GameManager.Instance.CameraManager.CameraSize + GameManager.Instance.CameraManager.CameraPos.y;
+        m_TempSpawnedPos.y = GameManager.Instance.CameraManager.CameraUpEndPos;
         for (int _matchableCount = 0; _matchableCount < m_CurrentLevelData.LevelMatchables.Count; _matchableCount++)
         {
             m_TempSpawnedPos.x = m_CurrentLevelData.LevelMatchables[_matchableCount].MatchableXIndis;
@@ -111,4 +114,13 @@ public class LevelManager : CustomBehaviour
         }
     }
     #endregion
+
+    private void DecreaseRemaingMoveCount()
+    {
+        RemainingMoveCount--;
+    }
+    private void OnDestroy()
+    {
+        GameManager.Instance.InputManager.OnClicked -= DecreaseRemaingMoveCount;
+    }
 }

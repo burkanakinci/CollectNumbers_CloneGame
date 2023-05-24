@@ -9,9 +9,14 @@ public class InputManager : CustomBehaviour
     [SerializeField] private bool m_CanClickable;
     #endregion
 
+    #region Events
+    public event Action OnClicked;
+    #endregion
+
     public override void Initialize()
     {
         m_CanClickable = false;
+        OnClicked += SetMatchableRay;
         GameManager.Instance.PlayerManager.Player.PlayerStateMachine.GetPlayerState(PlayerStates.RunState).OnEnterEvent += OnGameStartEnter;
         GameManager.Instance.PlayerManager.Player.PlayerStateMachine.GetPlayerState(PlayerStates.RunState).OnExitEvent += OnGameStartExit;
     }
@@ -26,7 +31,7 @@ public class InputManager : CustomBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                SetMatchableRay();
+                OnClicked?.Invoke();
             }
         }
     }
@@ -70,6 +75,7 @@ public class InputManager : CustomBehaviour
     }
     private void OnDestroy()
     {
+        OnClicked -= SetMatchableRay;
         GameManager.Instance.PlayerManager.Player.PlayerStateMachine.GetPlayerState(PlayerStates.RunState).OnEnterEvent -= OnGameStartEnter;
         GameManager.Instance.PlayerManager.Player.PlayerStateMachine.GetPlayerState(PlayerStates.RunState).OnExitEvent -= OnGameStartExit;
     }

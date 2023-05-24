@@ -21,6 +21,7 @@ public class Entities : CustomBehaviour
 
     #region Events
     public event Action OnCompleteSpawn;
+    public event Action OnBlastMatchables;
     public event Action OnCheckBlast;
     #endregion
     public override void Initialize()
@@ -50,27 +51,26 @@ public class Entities : CustomBehaviour
                 if (!m_BlastedMatchables.Contains(_matchable))
                 {
                     m_BlastedMatchables.Add(_matchable);
+                    OnBlastMatchables += _matchable.BlastMatchable;
                 }
                 break;
             case ListOperations.Substraction:
                 if (m_BlastedMatchables.Contains(_matchable))
                 {
                     m_BlastedMatchables.Remove(_matchable);
+                    OnBlastMatchables -= _matchable.BlastMatchable;
                 }
                 break;
-        }
-    }
-    public void BlastMatchables()
-    {
-        for (int _matchables = 0; _matchables < m_BlastedMatchables.Count - 1; _matchables++)
-        {
-            m_BlastedMatchables[_matchables].BlastMatchable();
         }
     }
     #endregion
     public void CheckBlastable()
     {
         OnCheckBlast?.Invoke();
+    }
+    public void BlastMatchables()
+    {
+        OnBlastMatchables?.Invoke();
     }
     public void CompleteSpawn()
     {

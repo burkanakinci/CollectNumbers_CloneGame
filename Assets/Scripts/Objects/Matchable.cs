@@ -28,6 +28,7 @@ public class Matchable : PooledObject
     public override void OnObjectDeactive()
     {
         KillAllTween();
+        m_CurrentNode.SetMatchableOnNode(null);
         m_MatchableVisual.KillAllTween();
         GameManager.Instance.Entities.OnCheckBlast -= CheckBlastable;
         GameManager.Instance.Entities.OnCompleteSpawn -= StartSpawnSequence;
@@ -42,7 +43,7 @@ public class Matchable : PooledObject
     public void SetMatchableCurrentNode(Node _node)
     {
         m_CurrentNode = _node;
-        m_CurrentNode.MatchableOnNode = this;
+        m_CurrentNode.SetMatchableOnNode(this);
         SetNeighbourNodes();
     }
     private void SetNeighbourNodes()
@@ -54,14 +55,12 @@ public class Matchable : PooledObject
     }
     public void ClickedMatchable()
     {
-        if (CurrentMatchableType.MatchableColor == MatchableColor.Random)
-        {
-            return;
-        }
-        else
+        if (CurrentMatchableType.MatchableColor != MatchableColor.Random)
         {
             SetMatchableType(GameManager.Instance.Entities.GetMatchableType((int)CurrentMatchableType.MatchableColor + 1));
             GameManager.Instance.Entities.CheckBlastable();
+            GameManager.Instance.Entities.BlastMatchables();
+            GameManager.Instance.GridManager.StartFillEmptyNodes();
         }
     }
     #region SpawnTween 
@@ -86,7 +85,7 @@ public class Matchable : PooledObject
     }
     private string m_SpawnSequenceID;
     private Sequence m_SpawnSequence;
-    private void SpawnSequence()
+    public void SpawnSequence()
     {
         DOTween.Kill(m_SpawnSequenceID);
         m_SpawnSequence.Append(MoveMatchable(m_CurrentNode.GetNodePosition(), m_MatchableData.SpawnMoveDuration, m_MatchableData.SpawnMoveEase, StartGameByMatchable));
@@ -125,7 +124,7 @@ public class Matchable : PooledObject
     }
     public void BlastMatchable()
     {
-
+        OnObjectDeactive();
     }
     private void KillAllTween()
     {
