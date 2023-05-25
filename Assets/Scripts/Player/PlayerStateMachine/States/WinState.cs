@@ -14,8 +14,9 @@ public class WinState : IPlayerState
 
     public void Enter()
     {
-        // GameManager.Instance.UIManager.CurrentUIPanel.HideAllArea();
-        // GameManager.Instance.UIManager.CurrentUIPanel.ShowArea<FinishAreaType>(FinishAreaType.SuccessArea);
+        GameManager.Instance.UIManager.GetPanel(UIPanelType.FinishPanel).ShowPanel();
+        GameManager.Instance.UIManager.CurrentUIPanel.HideAllArea();
+        GameManager.Instance.UIManager.CurrentUIPanel.ShowArea<FinishAreaType>(FinishAreaType.SuccessArea);
         OnEnterEvent?.Invoke();
     }
     public void UpdateLogic()

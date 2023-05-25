@@ -46,7 +46,7 @@ public class GridManager : CustomBehaviour
     }
     private IEnumerator FillNodesCoroutine()
     {
-        yield return new WaitForSeconds(0.08f);
+        yield return new WaitForSeconds(0.15f);
         for (int _row = 0; _row < GameManager.Instance.LevelManager.CurrentRowCount; _row++)
         {
             for (int _column = 0; _column < GameManager.Instance.LevelManager.CurrentColumnCount; _column++)
@@ -59,7 +59,6 @@ public class GridManager : CustomBehaviour
                 }
             }
         }
-        GameManager.Instance.Entities.CheckBlastable();
-        GameManager.Instance.Entities.BlastMatchables();
+        GameManager.Instance.InputManager.SetCanClickable(true);
     }
 }

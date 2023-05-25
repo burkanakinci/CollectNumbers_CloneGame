@@ -89,9 +89,8 @@ public enum UIPanelType
 }
 public enum FinishAreaType
 {
-    RampArea = 0,
-    SuccessArea = 1,
-    FailArea = 2,
+    SuccessArea = 0,
+    FailArea = 1,
 }
 public enum ActiveParents
 {

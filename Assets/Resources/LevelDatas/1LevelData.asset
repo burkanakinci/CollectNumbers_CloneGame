@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 1LevelData
   m_EditorClassIdentifier: 
   LevelNumber: 1
-  MovesCount: 7
+  MovesCount: 100
   GridRowCount: 4
   GridColumnCount: 5
   LevelMatchables:

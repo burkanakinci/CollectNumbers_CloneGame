@@ -14,9 +14,9 @@ public class FailState : IPlayerState
 
     public void Enter()
     {
-        // GameManager.Instance.UIManager.GetPanel(UIPanelType.FinishPanel).ShowPanel();
-        // GameManager.Instance.UIManager.CurrentUIPanel.HideAllArea();
-        // GameManager.Instance.UIManager.CurrentUIPanel.ShowArea<FinishAreaType>(FinishAreaType.FailArea);
+        GameManager.Instance.UIManager.GetPanel(UIPanelType.FinishPanel).ShowPanel();
+        GameManager.Instance.UIManager.CurrentUIPanel.HideAllArea();
+        GameManager.Instance.UIManager.CurrentUIPanel.ShowArea<FinishAreaType>(FinishAreaType.FailArea);
         OnEnterEvent?.Invoke();
     }
     public void UpdateLogic()
