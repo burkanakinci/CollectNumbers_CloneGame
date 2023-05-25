@@ -14,6 +14,7 @@ public class WinState : IPlayerState
 
     public void Enter()
     {
+        GameManager.Instance.LevelManager.CleanSceneObject();
         GameManager.Instance.UIManager.GetPanel(UIPanelType.FinishPanel).ShowPanel();
         GameManager.Instance.UIManager.CurrentUIPanel.HideAllArea();
         GameManager.Instance.UIManager.CurrentUIPanel.ShowArea<FinishAreaType>(FinishAreaType.SuccessArea);

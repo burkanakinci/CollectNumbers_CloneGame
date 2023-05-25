@@ -40,8 +40,12 @@ public class LevelManager : CustomBehaviour
         CurrentTargetMatchables = m_CurrentLevelData.TargetMatchables.ToList();
         OnChangeTargetMatchable?.Invoke(CurrentTargetMatchables);
         ChangeMoveCount(m_CurrentLevelData.MovesCount);
-        OnCleanSceneObject?.Invoke();
+        CleanSceneObject();
         StartSpawnSceneCoroutine();
+    }
+    public void CleanSceneObject()
+    {
+        OnCleanSceneObject?.Invoke();
     }
     private Coroutine m_SpawnSceneCoroutine;
     private void StartSpawnSceneCoroutine()

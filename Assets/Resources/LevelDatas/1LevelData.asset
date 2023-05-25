@@ -13,13 +13,34 @@ MonoBehaviour:
   m_Name: 1LevelData
   m_EditorClassIdentifier: 
   LevelNumber: 1
-  MovesCount: 100
-  GridRowCount: 4
-  GridColumnCount: 5
+  MovesCount: 7
+  GridRowCount: 6
+  GridColumnCount: 4
   LevelMatchables:
   - MatchableColorOnCell: 5
-    MatchableXIndis: 3
-    MatchableYIndis: 4
+    MatchableXIndis: 5
+    MatchableYIndis: 3
+  - MatchableColorOnCell: 5
+    MatchableXIndis: 5
+    MatchableYIndis: 2
+  - MatchableColorOnCell: 5
+    MatchableXIndis: 5
+    MatchableYIndis: 1
+  - MatchableColorOnCell: 5
+    MatchableXIndis: 5
+    MatchableYIndis: 0
+  - MatchableColorOnCell: 5
+    MatchableXIndis: 4
+    MatchableYIndis: 3
+  - MatchableColorOnCell: 5
+    MatchableXIndis: 4
+    MatchableYIndis: 2
+  - MatchableColorOnCell: 1
+    MatchableXIndis: 4
+    MatchableYIndis: 1
+  - MatchableColorOnCell: 5
+    MatchableXIndis: 4
+    MatchableYIndis: 0
   - MatchableColorOnCell: 5
     MatchableXIndis: 3
     MatchableYIndis: 3
@@ -32,10 +53,7 @@ MonoBehaviour:
   - MatchableColorOnCell: 5
     MatchableXIndis: 3
     MatchableYIndis: 0
-  - MatchableColorOnCell: 5
-    MatchableXIndis: 2
-    MatchableYIndis: 4
-  - MatchableColorOnCell: 5
+  - MatchableColorOnCell: 4
     MatchableXIndis: 2
     MatchableYIndis: 3
   - MatchableColorOnCell: 5
@@ -49,22 +67,16 @@ MonoBehaviour:
     MatchableYIndis: 0
   - MatchableColorOnCell: 5
     MatchableXIndis: 1
-    MatchableYIndis: 4
-  - MatchableColorOnCell: 5
-    MatchableXIndis: 1
     MatchableYIndis: 3
   - MatchableColorOnCell: 5
     MatchableXIndis: 1
     MatchableYIndis: 2
-  - MatchableColorOnCell: 3
+  - MatchableColorOnCell: 5
     MatchableXIndis: 1
     MatchableYIndis: 1
   - MatchableColorOnCell: 5
     MatchableXIndis: 1
     MatchableYIndis: 0
-  - MatchableColorOnCell: 5
-    MatchableXIndis: 0
-    MatchableYIndis: 4
   - MatchableColorOnCell: 5
     MatchableXIndis: 0
     MatchableYIndis: 3
@@ -77,8 +89,4 @@ MonoBehaviour:
   - MatchableColorOnCell: 5
     MatchableXIndis: 0
     MatchableYIndis: 0
-  TargetMatchables:
-  - TargetMatchableColor: 3
-    TargetMatchableCount: 10
-  - TargetMatchableColor: 4
-    TargetMatchableCount: 20
+  TargetMatchables: []

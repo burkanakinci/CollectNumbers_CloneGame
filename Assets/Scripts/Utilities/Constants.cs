@@ -67,6 +67,8 @@ public enum NeighbourType
 public enum PooledObjectType
 {
     Matchable = 0,
+    Blast_VFX=1,
+    Star_VFX=2,
 }
 public enum PlayerStates
 {
@@ -95,10 +97,12 @@ public enum FinishAreaType
 public enum ActiveParents
 {
     MatchableActiveParent = 0,
+    VFXActiveParent=1,
 }
 public enum DeactiveParents
 {
     MatchableDeactiveParent = 0,
+    VFXDeactiveParent=1,
 }
 public enum ListOperations
 {

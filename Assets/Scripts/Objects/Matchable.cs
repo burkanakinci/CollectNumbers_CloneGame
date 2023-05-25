@@ -151,6 +151,12 @@ public class Matchable : PooledObject
     }
     public void BlastMatchable()
     {
+        GameManager.Instance.ObjectPool.SpawnFromPool(
+            PooledObjectType.Blast_VFX,
+            transform.position,
+            Quaternion.identity,
+            GameManager.Instance.Entities.GetActiveParent(ActiveParents.VFXActiveParent)
+        );
         GameManager.Instance.LevelManager.DecreaseTargetMatchable(this);
         OnObjectDeactive();
     }
