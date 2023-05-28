@@ -56,8 +56,8 @@ public class GridManager : CustomBehaviour
                     if (GameManager.Instance.PlayerManager.Player.PlayerStateMachine.CompareState(PlayerStates.RunState))
                     {
                         GetNode(_row, _column).FillNode();
-                        FillNodesCoroutine();
-                        yield return null;
+                        _row = 0;
+                        _column = 0;
                     }
                 }
             }
