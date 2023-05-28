@@ -89,4 +89,8 @@ MonoBehaviour:
   - MatchableColorOnCell: 5
     MatchableXIndis: 0
     MatchableYIndis: 0
-  TargetMatchables: []
+  TargetMatchables:
+  - TargetMatchableColor: 3
+    TargetMatchableCount: 3
+  - TargetMatchableColor: 4
+    TargetMatchableCount: 3

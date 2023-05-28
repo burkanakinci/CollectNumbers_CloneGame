@@ -75,7 +75,7 @@ public class Entities : CustomBehaviour
     }
     private IEnumerator CheckBlastableCoroutine()
     {
-        yield return new WaitForSeconds(0.02f);
+        yield return new WaitForSeconds(0.1f);
         OnCheckBlast?.Invoke();
     }
     private Coroutine m_BlastMatchablesCoroutine;
@@ -89,7 +89,7 @@ public class Entities : CustomBehaviour
     }
     private IEnumerator BlastMatchablesCoroutine()
     {
-        yield return new WaitForSeconds(0.03f);
+        yield return new WaitForSeconds(0.25f);
         if (m_BlastedMatchables.Count == 0)
         {
             if (GameManager.Instance.LevelManager.RemainingMoveCount <= 0)

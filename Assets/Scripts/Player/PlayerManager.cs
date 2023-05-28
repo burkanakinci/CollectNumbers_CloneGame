@@ -1,5 +1,7 @@
 using UnityEngine;
-
+using System;
+using System.Collections.Generic;
+using System.Collections;
 public class PlayerManager : CustomBehaviour
 {
     #region Fields
@@ -14,6 +16,20 @@ public class PlayerManager : CustomBehaviour
         GameManager.Instance.OnLevelSuccess += OnLevelSuccess;
         GameManager.Instance.OnLevelFailed += OnLevelFailed;
     }
+    private Coroutine m_FinishCoroutine;
+    private void StartFinishCoroutine(PlayerStates _state)
+    {
+        if (m_FinishCoroutine != null)
+        {
+            StopCoroutine(m_FinishCoroutine);
+        }
+        m_FinishCoroutine = StartCoroutine(FinishCoroutine(_state));
+    }
+    private IEnumerator FinishCoroutine(PlayerStates _state)
+    {
+        yield return new WaitForSeconds(1.0f);
+        Player.PlayerStateMachine.ChangeStateTo(_state);
+    }
     #region Events
     public void OnResetToMainMenu()
     {
@@ -25,11 +41,11 @@ public class PlayerManager : CustomBehaviour
     }
     public void OnLevelSuccess()
     {
-        Player.PlayerStateMachine.ChangeStateTo(PlayerStates.SuccessState);
+        StartFinishCoroutine(PlayerStates.SuccessState);
     }
     public void OnLevelFailed()
     {
-        Player.PlayerStateMachine.ChangeStateTo(PlayerStates.FailState);
+        StartFinishCoroutine(PlayerStates.FailState);
     }
     private void OnDestroy()
     {

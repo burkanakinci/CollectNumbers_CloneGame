@@ -82,7 +82,7 @@ public class Matchable : PooledObject
     private void CompleteClickedSequence()
     {
         DOTween.Kill(m_CompleteClickedDelayID);
-        DOVirtual.DelayedCall(0.2f, CompleteClicked);
+        DOVirtual.DelayedCall(0.3f, CompleteClicked);
     }
     private void CompleteClicked()
     {
@@ -152,12 +152,15 @@ public class Matchable : PooledObject
     public void BlastMatchable()
     {
         GameManager.Instance.ObjectPool.SpawnFromPool(
-            PooledObjectType.Blast_VFX,
-            transform.position,
-            Quaternion.identity,
-            GameManager.Instance.Entities.GetActiveParent(ActiveParents.VFXActiveParent)
-        );
-        GameManager.Instance.LevelManager.DecreaseTargetMatchable(this);
+        PooledObjectType.Blast_VFX,
+        transform.position,
+        Quaternion.identity,
+        GameManager.Instance.Entities.GetActiveParent(ActiveParents.VFXActiveParent)
+    );
+        if (GameManager.Instance.PlayerManager.Player.PlayerStateMachine.CompareState(PlayerStates.RunState))
+        {
+            GameManager.Instance.LevelManager.DecreaseTargetMatchable(this);
+        }
         OnObjectDeactive();
     }
     private void KillAllTween()
