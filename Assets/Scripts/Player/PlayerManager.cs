@@ -27,7 +27,7 @@ public class PlayerManager : CustomBehaviour
     }
     private IEnumerator FinishCoroutine(PlayerStates _state)
     {
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(2.0f);
         Player.PlayerStateMachine.ChangeStateTo(_state);
     }
     #region Events
