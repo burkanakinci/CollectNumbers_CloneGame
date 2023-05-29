@@ -82,13 +82,7 @@ public class Matchable : PooledObject
     private void CompleteClickedSequence()
     {
         DOTween.Kill(m_CompleteClickedDelayID);
-        DOVirtual.DelayedCall(0.3f, CompleteClicked);
-    }
-    private void CompleteClicked()
-    {
-        GameManager.Instance.Entities.CheckBlastable();
-        GameManager.Instance.Entities.BlastMatchables();
-        GameManager.Instance.GridManager.StartFillEmptyNodes();
+        DOVirtual.DelayedCall(0.3f, GameManager.Instance.Entities.CheckGrid);
     }
     #region SpawnTween 
     private string m_MatchableMoveTweenID;
@@ -117,6 +111,7 @@ public class Matchable : PooledObject
         DOTween.Kill(m_SpawnSequenceID);
         m_SpawnSequence.Append(MoveMatchable(m_CurrentNode.GetNodePosition(), m_MatchableData.SpawnMoveDuration, m_MatchableData.SpawnMoveEase, StartGameByMatchable));
         m_SpawnSequence.Join(m_MatchableVisual.MatchableVisualScaleTween(Vector3.one, m_MatchableData.SpawnScaleDuration, m_MatchableData.SpawnScaleEase));
+        m_SpawnSequence.AppendCallback(() => GameManager.Instance.Entities.CheckGrid());
     }
     #endregion
 

@@ -64,6 +64,12 @@ public class Entities : CustomBehaviour
         }
     }
     #endregion
+    public void CheckGrid()
+    {
+        CheckBlastable();
+        BlastMatchables();
+        GameManager.Instance.GridManager.StartFillEmptyNodes();
+    }
     private Coroutine m_CheckBlastableCoroutine;
     public void CheckBlastable()
     {
@@ -79,7 +85,7 @@ public class Entities : CustomBehaviour
         OnCheckBlast?.Invoke();
     }
     private Coroutine m_BlastMatchablesCoroutine;
-    public void BlastMatchables()
+    private void BlastMatchables()
     {
         if (m_BlastMatchablesCoroutine != null)
         {
@@ -92,7 +98,7 @@ public class Entities : CustomBehaviour
         yield return new WaitForSeconds(0.25f);
         if (m_BlastedMatchables.Count == 0)
         {
-            if (GameManager.Instance.LevelManager.RemainingMoveCount <= 0)
+            if (GameManager.Instance.LevelManager.RemainingMoveCount <= 1)
                 GameManager.Instance.LevelFailed();
             else
                 GameManager.Instance.InputManager.SetCanClickable(true);
