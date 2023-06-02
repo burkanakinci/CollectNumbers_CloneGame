@@ -11,6 +11,7 @@ public class InputManager : CustomBehaviour
 
     #region Events
     public event Action OnClicked;
+    public event Action<bool> OnChangedCanClicked;
     #endregion
 
     public override void Initialize()
@@ -67,6 +68,7 @@ public class InputManager : CustomBehaviour
     public void SetCanClickable(bool _clickable)
     {
         m_CanClickable = _clickable;
+        OnChangedCanClicked?.Invoke(m_CanClickable);
     }
     #region Events
     private void OnGameStartEnter()

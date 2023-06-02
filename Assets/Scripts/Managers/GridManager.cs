@@ -5,7 +5,6 @@ using UnityEngine;
 public class GridManager : CustomBehaviour
 {
     private Node[,] m_NodesOnGrid;
-    public List<Node> GridNodes;
     public override void Initialize()
     {
         m_NodesOnGrid = new Node[9, 9];
@@ -19,7 +18,6 @@ public class GridManager : CustomBehaviour
             for (int _column = 0; _column < m_NodesOnGrid.GetLength(1); _column++)
             {
                 m_NodesOnGrid[_row, _column] = new Node(_row, _column);
-                GridNodes.Add(m_NodesOnGrid[_row, _column]);
             }
         }
     }

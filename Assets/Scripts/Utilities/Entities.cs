@@ -81,6 +81,7 @@ public class Entities : CustomBehaviour
     }
     private IEnumerator CheckBlastableCoroutine()
     {
+        ClearBlastedList();
         yield return new WaitForSeconds(0.1f);
         OnCheckBlast?.Invoke();
     }
@@ -111,5 +112,13 @@ public class Entities : CustomBehaviour
     public void CompleteSpawn()
     {
         OnCompleteSpawn?.Invoke();
+    }
+    private void ClearBlastedList()
+    {
+        for (int _blasted = 0; _blasted < m_BlastedMatchables.Count; _blasted++)
+        {
+            OnBlastMatchables -= m_BlastedMatchables[_blasted].BlastMatchable;
+        }
+        m_BlastedMatchables.Clear();
     }
 }
