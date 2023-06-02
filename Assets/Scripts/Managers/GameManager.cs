@@ -28,8 +28,6 @@ public class GameManager : MonoBehaviour
         Application.targetFrameRate = 60;
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
 
-        PlayerPrefs.DeleteAll();
-
         InitializeGameManager();
     }
     private void Start()
