@@ -95,6 +95,7 @@ public class LevelManager : CustomBehaviour
             {
                 m_TempSpawnedMatchable.SetMatchableType(GameManager.Instance.Entities.GetMatchableType((int)(m_CurrentLevelData.LevelMatchables[_matchableCount].MatchableColorOnCell)));
             }
+            m_TempSpawnedMatchable.SetMatchableVisual();
         }
         GameManager.Instance.Entities.CheckBlastable();
         StartCheckSpawnCorouitne();

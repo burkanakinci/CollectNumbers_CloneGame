@@ -15,7 +15,7 @@ public class MatchableVisual : CustomBehaviour<Matchable>
         m_ColorChangeTweenID = GetInstanceID() + "m_ColorChangeTweenID";
         m_TextRotateSequenceID = GetInstanceID() + "m_TextRotateTweenID";
     }
-    public void SetMatchableVisual(MatchableColor _matchableColor)
+    public void SetVisual(MatchableColor _matchableColor)
     {
         SetMatchableSpriteRenderer();
         SetMatchableText();

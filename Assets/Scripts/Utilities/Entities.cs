@@ -68,21 +68,9 @@ public class Entities : CustomBehaviour
     {
         CheckBlastable();
         BlastMatchables();
-        GameManager.Instance.GridManager.StartFillEmptyNodes();
     }
-    private Coroutine m_CheckBlastableCoroutine;
     public void CheckBlastable()
     {
-        if (m_CheckBlastableCoroutine != null)
-        {
-            StopCoroutine(m_CheckBlastableCoroutine);
-        }
-        m_CheckBlastableCoroutine = StartCoroutine(CheckBlastableCoroutine());
-    }
-    private IEnumerator CheckBlastableCoroutine()
-    {
-        ClearBlastedList();
-        yield return new WaitForSeconds(0.1f);
         OnCheckBlast?.Invoke();
     }
     private Coroutine m_BlastMatchablesCoroutine;
@@ -107,6 +95,7 @@ public class Entities : CustomBehaviour
         else
         {
             OnBlastMatchables?.Invoke();
+            GameManager.Instance.GridManager.StartFillEmptyNodes();
         }
     }
     public void CompleteSpawn()

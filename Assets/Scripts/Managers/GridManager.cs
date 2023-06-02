@@ -44,7 +44,11 @@ public class GridManager : CustomBehaviour
     }
     private IEnumerator FillNodesCoroutine()
     {
-        yield return new WaitForSeconds(0.75f);
+        yield return new WaitForEndOfFrame();
+        FillNodes();
+    }
+    public void FillNodes()
+    {
         for (int _row = 0; _row < GameManager.Instance.LevelManager.CurrentRowCount; _row++)
         {
             for (int _column = 0; _column < GameManager.Instance.LevelManager.CurrentColumnCount; _column++)
@@ -54,12 +58,25 @@ public class GridManager : CustomBehaviour
                     if (GameManager.Instance.PlayerManager.Player.PlayerStateMachine.CompareState(PlayerStates.RunState))
                     {
                         GetNode(_row, _column).FillNode();
-                        _row = 0;
-                        _column = 0;
+                        return;
                     }
                 }
             }
         }
-        GameManager.Instance.InputManager.SetCanClickable(true);
+        StartCheckGridCoroutine();
+    }
+    private Coroutine m_CheckGridCoroutine;
+    private void StartCheckGridCoroutine()
+    {
+        if (m_CheckGridCoroutine != null)
+        {
+            StopCoroutine(m_CheckGridCoroutine);
+        }
+        m_CheckGridCoroutine = StartCoroutine(CheckGridCoroutine());
+    }
+    private IEnumerator CheckGridCoroutine()
+    {
+        yield return new WaitForSeconds(0.5f);
+        GameManager.Instance.Entities.CheckGrid();
     }
 }

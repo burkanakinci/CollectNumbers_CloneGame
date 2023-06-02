@@ -49,7 +49,22 @@ public class Node
         ).GetGameObject().GetComponent<Matchable>();
         MatchableOnNode = m_TempSpawnedMatchable;
         MatchableOnNode.SetMatchableCurrentNode(this);
+        SetSpawnedMatchableType();
+    }
+    private void SetSpawnedMatchableType()
+    {
         MatchableOnNode.SetMatchableType(GameManager.Instance.Entities.GetMatchableType(UnityEngine.Random.Range(0, ((int)MatchableColor.Random))));
-        MatchableOnNode.SpawnSequence();
+        MatchableOnNode.CheckBlastable();
+        if (MatchableOnNode.CanBlastable)
+        {
+            Debug.Log("asddasasdasdds");
+            SetSpawnedMatchableType();
+        }
+        else
+        {
+            MatchableOnNode.SetMatchableVisual();
+            MatchableOnNode.SpawnSequence();
+            GameManager.Instance.GridManager.FillNodes();
+        }
     }
 }
