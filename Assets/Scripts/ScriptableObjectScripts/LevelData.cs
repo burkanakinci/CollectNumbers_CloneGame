@@ -4,7 +4,6 @@ using System.Collections.Generic;
 [CreateAssetMenu(fileName = "LevelData", menuName = "Level Data")]
 public class LevelData : ScriptableObject
 {
-
     #region Datas
     public int LevelNumber;
     public int MovesCount;
@@ -12,5 +11,7 @@ public class LevelData : ScriptableObject
     public int GridColumnCount;
     public List<MatchableOnCell> LevelMatchables;
     public TargetMatchable[] TargetMatchables;
+    public float CameraOrtographicSize;
+    public Vector3 CameraPosition;
     #endregion
 }

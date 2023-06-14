@@ -66,24 +66,26 @@ public class Matchable : PooledObject
         m_NeighbourNodes[2] = GameManager.Instance.GridManager.GetNode(m_CurrentNode.NodeXIndis - 1, m_CurrentNode.NodeYIndis);
         m_NeighbourNodes[3] = GameManager.Instance.GridManager.GetNode(m_CurrentNode.NodeXIndis + 1, m_CurrentNode.NodeYIndis);
     }
+    private float m_TotalScaleDuration => m_MatchableData.ScaleUpDuration + m_MatchableData.ScaleDownDuration;
     public void ClickedMatchable()
     {
-        if (CurrentMatchableType.MatchableColor != MatchableColor.Random)
+        if (CurrentMatchableType.MatchableColor != MatchableColor.Purple)
         {
-            m_MatchableVisual.MatchableVisualScaleTween(
+            m_MatchableVisual.DissolveTween(m_TotalScaleDuration, Ease.Linear);
+            m_MatchableVisual.ScaleTween(
                 Vector3.one * m_MatchableData.ClickedMultiplier,
                 m_MatchableData.ScaleUpDuration,
                 m_MatchableData.ScaleUpEase,
                 () =>
                 {
-                    SetMatchableType(GameManager.Instance.Entities.GetMatchableType((int)CurrentMatchableType.MatchableColor + 1));
-                    SetMatchableVisual();
-                    m_MatchableVisual.MatchableVisualScaleTween(
+                    m_MatchableVisual.ScaleTween(
                         Vector3.one,
                         m_MatchableData.ScaleDownDuration,
                         m_MatchableData.ScaleDownEase,
                         () =>
                         {
+                            SetMatchableType(GameManager.Instance.Entities.GetMatchableType((int)CurrentMatchableType.MatchableColor + 1));
+                            SetMatchableVisual();
                             CompleteClickedSequence();
                         }
                     );
@@ -111,7 +113,8 @@ public class Matchable : PooledObject
     private float m_SpawnTweenDelay;
     public void StartSpawnSequence()
     {
-        m_SpawnTweenDelay = m_CurrentNode.NodeYIndis * 0.5f;
+        m_SpawnTweenDelay = m_CurrentNode.NodeYIndis * 0.1f;
+        m_SpawnTweenDelay += m_CurrentNode.NodeXIndis * 0.1f;
         m_SpawnTweenDelay += 0.2f;
         DOTween.Kill(m_StartSpawnSequenceDelayID);
         DOVirtual.DelayedCall(m_SpawnTweenDelay, SpawnSequence)
@@ -119,11 +122,11 @@ public class Matchable : PooledObject
     }
     private string m_SpawnSequenceID;
     private Sequence m_SpawnSequence;
-    public void SpawnSequence()
+    private void SpawnSequence()
     {
         DOTween.Kill(m_SpawnSequenceID);
         m_SpawnSequence.Append(MoveMatchable(m_CurrentNode.GetNodePosition(), m_MatchableData.SpawnMoveDuration, m_MatchableData.SpawnMoveEase, StartGameByMatchable));
-        m_SpawnSequence.Join(m_MatchableVisual.MatchableVisualScaleTween(Vector3.one, m_MatchableData.SpawnScaleDuration, m_MatchableData.SpawnScaleEase));
+        m_SpawnSequence.Append(m_MatchableVisual.ScaleTween(Vector3.one, m_MatchableData.SpawnMoveDuration, m_MatchableData.SpawnMoveEase));
     }
     #endregion
 
@@ -142,7 +145,8 @@ public class Matchable : PooledObject
         {
             if (m_NeighbourNodes[(int)NeighbourType.Up].MatchableOnNode != null && m_NeighbourNodes[(int)NeighbourType.Down].MatchableOnNode != null)
             {
-                if (m_NeighbourNodes[(int)NeighbourType.Up].MatchableOnNode.CurrentMatchableType.MatchableColor == CurrentMatchableType.MatchableColor && m_NeighbourNodes[(int)NeighbourType.Down].MatchableOnNode.CurrentMatchableType.MatchableColor == CurrentMatchableType.MatchableColor)
+                if ((m_NeighbourNodes[(int)NeighbourType.Up].MatchableOnNode.CurrentMatchableType.MatchableColor == CurrentMatchableType.MatchableColor || m_NeighbourNodes[(int)NeighbourType.Up].MatchableOnNode.CurrentMatchableType.MatchableColor == MatchableColor.Random)
+                 && (m_NeighbourNodes[(int)NeighbourType.Down].MatchableOnNode.CurrentMatchableType.MatchableColor == CurrentMatchableType.MatchableColor || m_NeighbourNodes[(int)NeighbourType.Down].MatchableOnNode.CurrentMatchableType.MatchableColor == MatchableColor.Random))
                 {
                     GameManager.Instance.Entities.SetBlastedMatchables(ListOperations.Adding, this);
                     GameManager.Instance.Entities.SetBlastedMatchables(ListOperations.Adding, m_NeighbourNodes[(int)NeighbourType.Up].MatchableOnNode);

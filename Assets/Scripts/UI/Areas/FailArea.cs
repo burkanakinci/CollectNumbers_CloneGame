@@ -25,7 +25,7 @@ public class FailArea : UIArea
     }
     private IEnumerator ShowAreaCoroutine()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForEndOfFrame();
         base.ShowArea();
     }
 }

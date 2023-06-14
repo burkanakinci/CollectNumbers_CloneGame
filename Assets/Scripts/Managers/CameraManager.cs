@@ -19,24 +19,11 @@ public class CameraManager : CustomBehaviour
     }
     private void SetCameraPosition()
     {
-        m_MainCamera.transform.position = new Vector3(
-            ((GameManager.Instance.LevelManager.CurrentRowCount - 1) * 0.5f),
-            ((GameManager.Instance.LevelManager.CurrentColumnCount - 1) * 0.5f),
-            Camera.main.transform.position.z
-        );
+        m_MainCamera.transform.position = GameManager.Instance.LevelManager.CurrentCameraPosition;
     }
     private float m_TempCameraSize;
     private void SetCameraOrtographicSize()
     {
-        if (GameManager.Instance.LevelManager.CurrentColumnCount > GameManager.Instance.LevelManager.CurrentRowCount)
-        {
-            m_TempCameraSize = 5.0f;
-            m_TempCameraSize += (GameManager.Instance.LevelManager.CurrentColumnCount - 4) / 2.0f;
-        }
-        else
-        {
-            m_TempCameraSize = GameManager.Instance.LevelManager.CurrentRowCount + 1;
-        }
-        Camera.main.orthographicSize = m_TempCameraSize;
+        m_MainCamera.orthographicSize = GameManager.Instance.LevelManager.CurrentCameraSize;
     }
 }

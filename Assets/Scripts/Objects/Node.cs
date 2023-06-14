@@ -35,7 +35,7 @@ public class Node
             {
                 MatchableOnNode = GameManager.Instance.GridManager.GetNode(NodeXIndis, _column).MatchableOnNode;
                 GameManager.Instance.GridManager.GetNode(NodeXIndis, _column).MatchableOnNode.SetMatchableCurrentNode(this);
-                MatchableOnNode.SpawnSequence();
+                MatchableOnNode.StartSpawnSequence();
                 GameManager.Instance.GridManager.GetNode(NodeXIndis, _column).SetMatchableOnNode(null);
                 GameManager.Instance.GridManager.StartFillEmptyNodes();
                 return;
@@ -57,13 +57,12 @@ public class Node
         MatchableOnNode.CheckBlastable();
         if (MatchableOnNode.CanBlastable)
         {
-            Debug.Log("asddasasdasdds");
             SetSpawnedMatchableType();
         }
         else
         {
             MatchableOnNode.SetMatchableVisual();
-            MatchableOnNode.SpawnSequence();
+            MatchableOnNode.StartSpawnSequence();
             GameManager.Instance.GridManager.FillNodes();
         }
     }

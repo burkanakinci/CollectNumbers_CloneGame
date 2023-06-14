@@ -84,10 +84,10 @@ public class Entities : CustomBehaviour
     }
     private IEnumerator BlastMatchablesCoroutine()
     {
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.1f);
         if (m_BlastedMatchables.Count == 0)
         {
-            if (GameManager.Instance.LevelManager.RemainingMoveCount <= 1)
+            if (GameManager.Instance.LevelManager.RemainingMoveCount <= 0)
                 GameManager.Instance.LevelFailed();
             else
                 GameManager.Instance.InputManager.SetCanClickable(true);

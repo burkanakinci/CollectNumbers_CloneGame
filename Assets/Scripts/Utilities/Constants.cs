@@ -20,11 +20,13 @@ public struct MatchableType
 {
     public MatchableColor MatchableColor;
     public Sprite MatchableSprite;
+    public Sprite BackSprite;
     public int MatchableValue;
 }
 public struct Constant
 {
     public const string PLAYER_DATA = "PlayerSavedData";
+    public const string DISSOLVE_VALUE="_DissolveValue";
 }
 
 [System.Serializable]
@@ -32,6 +34,7 @@ public struct TargetMatchable
 {
     public MatchableColor TargetMatchableColor;
     public int TargetMatchableCount;
+    public Vector3 TargetMatchablePosition;
 }
 public class Colors
 {
@@ -69,6 +72,7 @@ public enum PooledObjectType
     Matchable = 0,
     Blast_VFX=1,
     Star_VFX=2,
+    TargetMatchable=3,
 }
 public enum PlayerStates
 {
@@ -98,11 +102,13 @@ public enum ActiveParents
 {
     MatchableActiveParent = 0,
     VFXActiveParent=1,
+    TargetMatchable=2,
 }
 public enum DeactiveParents
 {
     MatchableDeactiveParent = 0,
     VFXDeactiveParent=1,
+    TargetMatchable=2,
 }
 public enum ListOperations
 {

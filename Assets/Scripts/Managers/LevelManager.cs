@@ -14,9 +14,11 @@ public class LevelManager : CustomBehaviour
     #endregion
 
     #region ExternalAccess
+    public Vector3 CurrentCameraPosition=>m_CurrentLevelData.CameraPosition;
+    public float CurrentCameraSize=>m_CurrentLevelData.CameraOrtographicSize;
     public int CurrentRowCount => m_CurrentLevelData.GridRowCount;
     public int CurrentColumnCount => m_CurrentLevelData.GridColumnCount;
-    public List<TargetMatchable> CurrentTargetMatchables { get; private set; }
+    private List<TargetMatchable> m_CurrentTargetMatchables;
     public int RemainingMoveCount { get; private set; }
     #endregion
 
@@ -37,8 +39,7 @@ public class LevelManager : CustomBehaviour
     }
     public void CreateLevel()
     {
-        CurrentTargetMatchables = m_CurrentLevelData.TargetMatchables.ToList();
-        OnChangeTargetMatchable?.Invoke(CurrentTargetMatchables);
+        m_CurrentTargetMatchables = m_CurrentLevelData.TargetMatchables.ToList();
         ChangeMoveCount(m_CurrentLevelData.MovesCount);
         CleanSceneObject();
         StartSpawnSceneCoroutine();
@@ -133,26 +134,7 @@ public class LevelManager : CustomBehaviour
     }
     public void DecreaseTargetMatchable(Matchable _matchable)
     {
-        for (int _target = 0; _target < CurrentTargetMatchables.Count; _target++)
-        {
-            if (_matchable.CurrentMatchableType.MatchableColor == CurrentTargetMatchables[_target].TargetMatchableColor &&
-            CurrentTargetMatchables[_target].TargetMatchableCount > 0)
-            {
-                CurrentTargetMatchables[_target] = new TargetMatchable
-                {
-                    TargetMatchableColor = CurrentTargetMatchables[_target].TargetMatchableColor,
-                    TargetMatchableCount = CurrentTargetMatchables[_target].TargetMatchableCount - 1,
-                };
-                OnChangeTargetMatchable?.Invoke(CurrentTargetMatchables);
-            }
-        }
-        for (int _target = 0; _target < CurrentTargetMatchables.Count; _target++)
-        {
-            if (CurrentTargetMatchables[_target].TargetMatchableCount > 0)
-            {
-                return;
-            }
-        }
+        
         GameManager.Instance.LevelSuccess();
     }
     private void OnDestroy()

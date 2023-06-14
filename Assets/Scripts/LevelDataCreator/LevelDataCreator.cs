@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,13 +12,14 @@ public class LevelDataCreator : MonoBehaviour
 
     [HideInInspector] public LevelData TempLevelData;
     private string m_SavePath;
+    [SerializeField] private Sprite[] m_SpawnedSprite;
 
     #region  LevelDataFields
     [HideInInspector] public int LevelNumber;
     [HideInInspector] public int MovesCount;
     [HideInInspector] public MatchableColor[,] MatchableTypes;
     [HideInInspector] public int GridCellXCount = 9, GridCellYCount = 9;
-    public List<TargetMatchable> TargetMatchables = new List<TargetMatchable>();
+    private List<Target> m_TargetMatchables = new List<Target>();
     #endregion
     #region SceneFields
     [SerializeField] private Transform m_MatchablesParent;
@@ -35,6 +37,8 @@ public class LevelDataCreator : MonoBehaviour
         TempLevelData.MovesCount = MovesCount;
         TempLevelData.GridRowCount = GridCellXCount;
         TempLevelData.GridColumnCount = GridCellYCount;
+        TempLevelData.CameraOrtographicSize = Camera.main.orthographicSize;
+        TempLevelData.CameraPosition = Camera.main.transform.position;
         TempLevelData.LevelMatchables = new List<MatchableOnCell>();
         for (int _horizontalCount = MatchableTypes.GetLength(0) - 1; _horizontalCount >= 0; _horizontalCount--)
         {
@@ -48,14 +52,19 @@ public class LevelDataCreator : MonoBehaviour
                 });
             }
         }
-        TempLevelData.TargetMatchables = TargetMatchables.ToArray();
+        m_TargetMatchables = GameObject.FindObjectsOfType<Target>().ToList();
+        TempLevelData.TargetMatchables = new TargetMatchable[m_TargetMatchables.Count];
+        for (int _targetCount = 0; _targetCount < m_TargetMatchables.Count; _targetCount++)
+        {
+            TempLevelData.TargetMatchables[_targetCount].TargetMatchableColor = m_TargetMatchables[_targetCount].CurrentTargetMatchable.TargetMatchableColor;
+            TempLevelData.TargetMatchables[_targetCount].TargetMatchableCount = m_TargetMatchables[_targetCount].CurrentTargetMatchable.TargetMatchableCount;
+            TempLevelData.TargetMatchables[_targetCount].TargetMatchablePosition = m_TargetMatchables[_targetCount].transform.position;
+        }
 
         AssetDatabase.CreateAsset(TempLevelData, m_SavePath);
         AssetDatabase.SaveAssets();
     }
-    private Color m_TempSpawnedColor;
     private Transform m_TempSpawnedMatchable;
-    private string m_TempSpawnedText;
     public void SpawnMatchables()
     {
         for (int _childCount = m_MatchablesParent.childCount - 1; _childCount >= 0; _childCount--)
@@ -67,25 +76,13 @@ public class LevelDataCreator : MonoBehaviour
         {
             for (int _verticalCount = MatchableTypes.GetLength(1) - 1; _verticalCount >= 0; _verticalCount--)
             {
-                if (MatchableTypes[_horizontalCount, _verticalCount] != MatchableColor.Random)
-                {
-                    m_TempSpawnedColor = Colors.GetColor(MatchableTypes[_horizontalCount, _verticalCount]);
-                    m_TempSpawnedText = ((int)MatchableTypes[_horizontalCount, _verticalCount] + 1) + "";
-                }
-                else
-                {
-                    m_TempSpawnedColor = Color.white;
-                    m_TempSpawnedText = "R";
-                }
-
                 m_TempSpawnedMatchable = Instantiate(
                     m_MatchablePrefab,
                     new Vector3(_horizontalCount, _verticalCount, 0.0f),
                     Quaternion.identity,
                     m_MatchablesParent
                 ).transform;
-                m_TempSpawnedMatchable.GetChild(0).GetChild(0).transform.GetComponent<SpriteRenderer>().color = m_TempSpawnedColor;
-                m_TempSpawnedMatchable.GetChild(0).GetChild(1).transform.GetComponent<TextMeshPro>().text = m_TempSpawnedText;
+                m_TempSpawnedMatchable.GetChild(0).GetChild(0).transform.GetComponent<SpriteRenderer>().sprite = m_SpawnedSprite[(int)MatchableTypes[_horizontalCount, _verticalCount]];
             }
         }
 
@@ -96,5 +93,4 @@ public class LevelDataCreator : MonoBehaviour
         );
     }
 }
-
-
+#endif

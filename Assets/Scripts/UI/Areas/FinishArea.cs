@@ -47,7 +47,7 @@ public class FinishArea : UIArea
     private int m_EarnedOnLevel;
     private IEnumerator ShowAreaCoroutine()
     {
-        yield return new WaitForEndOfFrame();
+        yield return new WaitForSeconds(1.0f);
         m_TempEarnedValue = 0;
         SetLevelEarnedText();
         SetPlayerScoreText();

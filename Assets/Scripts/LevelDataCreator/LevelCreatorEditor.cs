@@ -12,8 +12,6 @@ using UnityEditor;
 public class LevelCreatorEditor : Editor
 {
     private MatchableColor[,] m_TempMatchableTypes = new MatchableColor[9, 9];
-    private MatchableColor m_TempTargetMatchableType = MatchableColor.Random;
-    private int m_TempTargetMatchableCount = 1;
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
@@ -39,20 +37,6 @@ public class LevelCreatorEditor : Editor
         #endregion
 
         GUILayout.Space(25);
-
-        m_TempTargetMatchableCount = EditorGUILayout.IntField("Target Matchable Count", m_TempTargetMatchableCount);
-        m_TempTargetMatchableType = (MatchableColor)EditorGUILayout.EnumPopup("Target Matchable Type", m_TempTargetMatchableType);
-
-
-
-        if (GUILayout.Button("Add Target Matchable", GUILayout.Width(150), GUILayout.Height(45)))
-        {
-            m_LevelDataCreator.TargetMatchables.Add(new TargetMatchable
-            {
-                TargetMatchableColor = m_TempTargetMatchableType,
-                TargetMatchableCount = m_TempTargetMatchableCount
-            });
-        }
 
         EditorGUI.BeginChangeCheck();
 

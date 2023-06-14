@@ -27,7 +27,7 @@ public class PlayerManager : CustomBehaviour
     }
     private IEnumerator FinishCoroutine(PlayerStates _state)
     {
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForEndOfFrame();
         Player.PlayerStateMachine.ChangeStateTo(_state);
     }
     #region Events

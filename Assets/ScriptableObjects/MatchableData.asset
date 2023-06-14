@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MatchableData
   m_EditorClassIdentifier: 
   m_SpawnMoveDuration: 0.5
-  m_SpawnMoveEase: 1
+  m_SpawnMoveEase: 3
   m_SpawnScaleDuration: 0.5
   m_SpawnScaleEase: 3
   m_ClickedMultiplier: 1.2

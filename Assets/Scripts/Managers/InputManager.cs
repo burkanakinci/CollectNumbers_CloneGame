@@ -17,7 +17,6 @@ public class InputManager : CustomBehaviour
     public override void Initialize()
     {
         m_CanClickable = false;
-        OnClicked += SetMatchableRay;
         GameManager.Instance.PlayerManager.Player.PlayerStateMachine.GetPlayerState(PlayerStates.RunState).OnEnterEvent += OnGameStartEnter;
         GameManager.Instance.PlayerManager.Player.PlayerStateMachine.GetPlayerState(PlayerStates.RunState).OnExitEvent += OnGameStartExit;
     }
@@ -32,7 +31,7 @@ public class InputManager : CustomBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                OnClicked?.Invoke();
+                SetMatchableRay();
             }
         }
     }
@@ -60,9 +59,13 @@ public class InputManager : CustomBehaviour
 
         if (Physics.Raycast(m_MatchableRay, out m_MatchableHit, Mathf.Infinity, m_CubeLayerMask))
         {
-            SetCanClickable(false);
             m_ClickedMatchable = m_MatchableHit.transform.GetComponent<Matchable>();
-            m_ClickedMatchable.ClickedMatchable();
+            if (m_ClickedMatchable.CurrentMatchableType.MatchableColor != MatchableColor.Purple)
+            {
+                SetCanClickable(false);
+                OnClicked?.Invoke();
+                m_ClickedMatchable.ClickedMatchable();
+            }
         }
     }
     public void SetCanClickable(bool _clickable)
@@ -81,7 +84,6 @@ public class InputManager : CustomBehaviour
     }
     private void OnDestroy()
     {
-        OnClicked -= SetMatchableRay;
         GameManager.Instance.PlayerManager.Player.PlayerStateMachine.GetPlayerState(PlayerStates.RunState).OnEnterEvent -= OnGameStartEnter;
         GameManager.Instance.PlayerManager.Player.PlayerStateMachine.GetPlayerState(PlayerStates.RunState).OnExitEvent -= OnGameStartExit;
     }
