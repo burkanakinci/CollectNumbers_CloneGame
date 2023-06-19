@@ -11,10 +11,6 @@ public class NextLevelButton : UIBaseButton<UIPanel>
     }
     protected override void OnClickAction()
     {
-        if (!m_IsRestart)
-        {
-            GameManager.Instance.PlayerManager.Player.SetPlayerLevel(GameManager.Instance.PlayerManager.Player.PlayerData.PlayerLevel + 1);
-        }
-        GameManager.Instance.ResetToMainMenu();
+        
     }
 }

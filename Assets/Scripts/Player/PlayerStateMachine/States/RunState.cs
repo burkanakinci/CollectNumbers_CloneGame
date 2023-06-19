@@ -15,6 +15,10 @@ public class RunState : IPlayerState
     public void Enter()
     {
         GameManager.Instance.UIManager.GetPanel(UIPanelType.HudPanel).ShowPanel();
+        GameManager.Instance.LevelManager.SetLevelNumber(m_Player.PlayerData.PlayerLevel);
+        GameManager.Instance.LevelManager.GetLevelData();
+        GameManager.Instance.CameraManager.SetCamera();
+        GameManager.Instance.LevelManager.CreateLevel();
         OnEnterEvent?.Invoke();
     }
     public void UpdateLogic()

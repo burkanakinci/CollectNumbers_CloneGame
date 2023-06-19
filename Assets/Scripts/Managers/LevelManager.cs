@@ -25,7 +25,6 @@ public class LevelManager : CustomBehaviour
     #region Actions
     public event Action OnCleanSceneObject;
     public event Action<int> OnChangeMoveCount;
-    public event Action<List<TargetMatchable>> OnChangeTargetMatchable;
     #endregion
     public override void Initialize()
     {
@@ -134,7 +133,7 @@ public class LevelManager : CustomBehaviour
     }
     public void DecreaseTargetMatchable(Matchable _matchable)
     {
-        
+
         GameManager.Instance.LevelSuccess();
     }
     private void OnDestroy()

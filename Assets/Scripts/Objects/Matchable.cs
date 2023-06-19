@@ -125,18 +125,11 @@ public class Matchable : PooledObject
     private void SpawnSequence()
     {
         DOTween.Kill(m_SpawnSequenceID);
-        m_SpawnSequence.Append(MoveMatchable(m_CurrentNode.GetNodePosition(), m_MatchableData.SpawnMoveDuration, m_MatchableData.SpawnMoveEase, StartGameByMatchable));
+        m_SpawnSequence.Append(MoveMatchable(m_CurrentNode.GetNodePosition(), m_MatchableData.SpawnMoveDuration, m_MatchableData.SpawnMoveEase));
         m_SpawnSequence.Append(m_MatchableVisual.ScaleTween(Vector3.one, m_MatchableData.SpawnMoveDuration, m_MatchableData.SpawnMoveEase));
     }
     #endregion
 
-    private void StartGameByMatchable()
-    {
-        if (m_CurrentNode.NodeXIndis == GameManager.Instance.LevelManager.CurrentRowCount - 1 && m_CurrentNode.NodeYIndis == GameManager.Instance.LevelManager.CurrentColumnCount - 1)
-        {
-            GameManager.Instance.GameStart();
-        }
-    }
     public bool CanBlastable { get; private set; }
     public void CheckBlastable()
     {
