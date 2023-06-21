@@ -16,13 +16,18 @@ public class LevelArea : UIArea
         m_TargetPos = m_StartPos + Vector3.right * -300.0f;
     }
     private string m_AreaTweenID;
-    public override void ShowArea()
+    private void ShowTween()
     {
         transform.localPosition = m_TargetPos;
         DOTween.Kill(m_AreaTweenID);
-        transform.DOLocalMove(m_StartPos, 0.75f)
-        .SetEase(Ease.OutExpo)
+        transform.DOLocalMove(m_StartPos, 0.65f)
+        .SetEase(Ease.Linear)
         .SetId(m_AreaTweenID);
+    }
+    public override void ShowArea()
+    {
+        ShowTween();
+        SetLevelText();
         base.ShowArea();
     }
     public override void HideArea()

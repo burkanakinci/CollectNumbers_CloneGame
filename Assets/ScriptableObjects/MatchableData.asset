@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07a32ef52464666408446c184e2d15f2, type: 3}
   m_Name: MatchableData
   m_EditorClassIdentifier: 
-  m_SpawnMoveDuration: 0.5
-  m_SpawnMoveEase: 3
-  m_SpawnScaleDuration: 0.5
-  m_SpawnScaleEase: 3
+  m_SpawnMoveDuration: 0.7
+  m_SpawnMoveEase: 1
+  m_SpawnScaleDuration: 0.7
+  m_SpawnScaleEase: 18
   m_ClickedMultiplier: 1.2
   m_ScaleUpDuration: 0.4
   m_ScaleDownDuration: 0.3

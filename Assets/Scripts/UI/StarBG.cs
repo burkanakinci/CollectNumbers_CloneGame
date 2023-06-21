@@ -23,9 +23,9 @@ public class StarBG : CustomBehaviour<MainMenuPanel>
     {
         DOTween.Kill(m_BGStarSequenceID);
         m_TargetPos = transform.localPosition;
-        m_TargetPos.x = Mathf.Clamp(m_TargetPos.x + Random.Range(-50.0f, 50.0f), CachedComponent.ScreenWidth * -1.0f, CachedComponent.ScreenWidth );
-        m_TargetPos.y = Mathf.Clamp(m_TargetPos.y + Random.Range(-50.0f, 50.0f), CachedComponent.ScreenHeight * -1.0f, CachedComponent.ScreenHeight );
-        m_MoveDuration = Random.Range(2.5f, 3.0f);
+        m_TargetPos.x = Mathf.Clamp(m_TargetPos.x + Random.Range(-100.0f, 100.0f), CachedComponent.ScreenWidth * -1.0f, CachedComponent.ScreenWidth );
+        m_TargetPos.y = Mathf.Clamp(m_TargetPos.y + Random.Range(-100.0f, 100.0f), CachedComponent.ScreenHeight * -1.0f, CachedComponent.ScreenHeight );
+        m_MoveDuration = Random.Range(2.5f, 3.75f);
         m_TargetScale = Vector3.one * Random.Range(0.25f, 1.0f);
         m_ScaleDuration = Random.Range(2.4f, m_MoveDuration);
         m_BGStarSequence = DOTween.Sequence().SetId(m_BGStarSequenceID);

@@ -22,6 +22,7 @@ public class Entities : CustomBehaviour
     #region Events
     public event Action OnCompleteSpawn;
     public event Action OnBlastMatchables;
+    public event Action<Matchable> OnAddedBlastMatchable;
     public event Action OnCheckBlast;
     #endregion
     public override void Initialize()
@@ -51,6 +52,7 @@ public class Entities : CustomBehaviour
                 if (!m_BlastedMatchables.Contains(_matchable))
                 {
                     m_BlastedMatchables.Add(_matchable);
+                    OnAddedBlastMatchable?.Invoke(_matchable);
                     OnBlastMatchables += _matchable.BlastMatchable;
                 }
                 break;
@@ -84,7 +86,7 @@ public class Entities : CustomBehaviour
     }
     private IEnumerator BlastMatchablesCoroutine()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.2f);
         if (m_BlastedMatchables.Count == 0)
         {
             if (GameManager.Instance.LevelManager.RemainingMoveCount <= 0)

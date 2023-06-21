@@ -19,7 +19,7 @@ public class LevelDataCreator : MonoBehaviour
     [HideInInspector] public int MovesCount;
     [HideInInspector] public MatchableColor[,] MatchableTypes;
     [HideInInspector] public int GridCellXCount = 9, GridCellYCount = 9;
-    private List<Target> m_TargetMatchables = new List<Target>();
+    public List<TargetMatchable> m_TargetMatchables = new List<TargetMatchable>();
     #endregion
     #region SceneFields
     [SerializeField] private Transform m_MatchablesParent;
@@ -52,13 +52,11 @@ public class LevelDataCreator : MonoBehaviour
                 });
             }
         }
-        m_TargetMatchables = GameObject.FindObjectsOfType<Target>().ToList();
         TempLevelData.TargetMatchables = new TargetMatchable[m_TargetMatchables.Count];
         for (int _targetCount = 0; _targetCount < m_TargetMatchables.Count; _targetCount++)
         {
-            TempLevelData.TargetMatchables[_targetCount].TargetMatchableColor = m_TargetMatchables[_targetCount].CurrentTargetMatchable.TargetMatchableColor;
-            TempLevelData.TargetMatchables[_targetCount].TargetMatchableCount = m_TargetMatchables[_targetCount].CurrentTargetMatchable.TargetMatchableCount;
-            TempLevelData.TargetMatchables[_targetCount].TargetMatchablePosition = m_TargetMatchables[_targetCount].transform.position;
+            TempLevelData.TargetMatchables[_targetCount].TargetMatchableColor = m_TargetMatchables[_targetCount].TargetMatchableColor;
+            TempLevelData.TargetMatchables[_targetCount].TargetMatchableCount = m_TargetMatchables[_targetCount].TargetMatchableCount;
         }
 
         AssetDatabase.CreateAsset(TempLevelData, m_SavePath);

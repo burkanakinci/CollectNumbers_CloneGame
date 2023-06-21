@@ -34,7 +34,6 @@ public class GameManager : MonoBehaviour
     {
         ResetToMainMenu();
     }
-
     public void InitializeGameManager()
     {
         Entities.Initialize();
@@ -47,7 +46,6 @@ public class GameManager : MonoBehaviour
         GridManager.Initialize();
         CameraManager.Initialize();
     }
-
     #region Events
     public void ResetToMainMenu()
     {

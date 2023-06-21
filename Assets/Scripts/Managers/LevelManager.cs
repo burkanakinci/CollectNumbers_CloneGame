@@ -14,11 +14,11 @@ public class LevelManager : CustomBehaviour
     #endregion
 
     #region ExternalAccess
-    public Vector3 CurrentCameraPosition=>m_CurrentLevelData.CameraPosition;
-    public float CurrentCameraSize=>m_CurrentLevelData.CameraOrtographicSize;
+    public Vector3 CurrentCameraPosition => m_CurrentLevelData.CameraPosition;
+    public float CurrentCameraSize => m_CurrentLevelData.CameraOrtographicSize;
     public int CurrentRowCount => m_CurrentLevelData.GridRowCount;
     public int CurrentColumnCount => m_CurrentLevelData.GridColumnCount;
-    private List<TargetMatchable> m_CurrentTargetMatchables;
+    public List<TargetMatchable> CurrentTargetMatchables { get; private set; }
     public int RemainingMoveCount { get; private set; }
     #endregion
 
@@ -30,15 +30,20 @@ public class LevelManager : CustomBehaviour
     {
         m_MaxLevelDataCount = Resources.LoadAll("LevelDatas", typeof(LevelData)).Length;
         GameManager.Instance.InputManager.OnClicked += DecreaseMoveCount;
+        CurrentTargetMatchables = new List<TargetMatchable>();
     }
     public void SetLevelNumber(int _levelNumber)
     {
         m_CurrentLevelNumber = _levelNumber;
         m_ActiveLevelDataNumber = (m_CurrentLevelNumber <= m_MaxLevelDataCount) ? (m_CurrentLevelNumber) : ((int)(UnityEngine.Random.Range(1, (m_MaxLevelDataCount + 1))));
     }
+    public void SetTargetMatchableList()
+    {
+        CurrentTargetMatchables.Clear();
+        CurrentTargetMatchables.AddRange(m_CurrentLevelData.TargetMatchables.ToList());
+    }
     public void CreateLevel()
     {
-        m_CurrentTargetMatchables = m_CurrentLevelData.TargetMatchables.ToList();
         ChangeMoveCount(m_CurrentLevelData.MovesCount);
         CleanSceneObject();
         StartSpawnSceneCoroutine();
@@ -134,7 +139,6 @@ public class LevelManager : CustomBehaviour
     public void DecreaseTargetMatchable(Matchable _matchable)
     {
 
-        GameManager.Instance.LevelSuccess();
     }
     private void OnDestroy()
     {

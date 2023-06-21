@@ -18,8 +18,8 @@ public class MoveArea : UIArea
     private string m_ScaleTweenID;
     public override void ShowArea()
     {
-        transform.DOScale(Vector3.one, 0.75f)
-        .SetEase(Ease.OutExpo)
+        transform.DOScale(Vector3.one, 0.65f)
+        .SetEase(Ease.Linear)
         .SetId(m_ScaleTweenID);
         base.ShowArea();
     }

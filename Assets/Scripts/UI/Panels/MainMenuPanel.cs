@@ -52,10 +52,10 @@ public class MainMenuPanel : UIPanel
     public void StartMainMenuDisolve()
     {
         DOTween.Kill(m_MaskTweenID);
-        DOTween.To(() => 0.0f, x => m_MaskTweenLerp = x, 1.0f, 1.0f)
+        DOTween.To(() => 0.0f, x => m_MaskTweenLerp = x, 1.0f, 0.70f)
         .OnUpdate(() => { DissolveMainMenu(m_MaskTweenLerp); })
         .OnComplete(CompleteMainDissolve)
-        .SetEase(Ease.OutExpo)
+        .SetEase(Ease.Linear)
         .SetId(m_MaskTweenID);
     }
     private void CompleteMainDissolve()
@@ -69,10 +69,7 @@ public class MainMenuPanel : UIPanel
     }
     private void DissolveMainMenu(float _lerp)
     {
-        m_MaskPaddingValue.x = Mathf.Lerp(0.0f, ScreenWidth, _lerp);
-        m_MaskPaddingValue.z = m_MaskPaddingValue.x;
-        m_MaskPaddingValue.w = Mathf.Lerp(0.0f, ScreenHeight, _lerp);
-        m_MaskPaddingValue.y = m_MaskPaddingValue.w;
+        m_MaskPaddingValue.x = Mathf.Lerp(0.0f, ScreenWidth * 2.0f, _lerp);
         SetMaskPadding(m_MaskPaddingValue);
     }
     private void KillAllTween()
