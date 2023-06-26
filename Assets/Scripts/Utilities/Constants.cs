@@ -22,6 +22,7 @@ public struct MatchableType
     public Sprite MatchableSprite;
     public Sprite BackSprite;
     public int MatchableValue;
+    public Color TrailColor;
 }
 public struct Constant
 {
@@ -40,21 +41,6 @@ public struct TargetAreaValue
 {
     public float BGHeight;
     public Sprite AreaBG;
-}
-public class Colors
-{
-    public static readonly Vector4[] ColorArray = {
-        new Vector4(1.0f,0.0f,0.0f,1.0f),
-        new Vector4(0.0f,1.0f,0.0f,1.0f),
-        new Vector4(0.0f,0.0f,1.0f,1.0f),
-        new Vector4(1.0f,0.5f,0.0f,1.0f),
-        new Vector4(0.5f,0.0f,1.0f,1.0f),
-        new Vector4(1.0f,1.0f,1.0f,1.0f)
-        };
-    public static Color GetColor(MatchableColor _color)
-    {
-        return new Color(Colors.ColorArray[(int)_color].x, Colors.ColorArray[(int)_color].y, Colors.ColorArray[(int)_color].z, Colors.ColorArray[(int)_color].w);
-    }
 }
 public enum MatchableColor
 {
@@ -77,6 +63,7 @@ public enum PooledObjectType
     Matchable = 0,
     Blast_VFX = 1,
     Star_VFX = 2,
+    Coin=3,
 }
 public enum PlayerStates
 {

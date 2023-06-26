@@ -44,7 +44,7 @@ public class GridManager : CustomBehaviour
     }
     private IEnumerator FillNodesCoroutine()
     {
-        yield return new WaitForEndOfFrame();
+        yield return new WaitForSecondsRealtime(0.35f);
         FillNodes();
     }
     public void FillNodes()

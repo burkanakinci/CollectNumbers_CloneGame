@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System;
 public class UIArea : CustomBehaviour<UIPanel>
 {
     [SerializeField] private CanvasGroup m_CanvasGroup;
@@ -14,7 +14,10 @@ public class UIArea : CustomBehaviour<UIPanel>
     {
         CanvasGroup.Open();
     }
-
+    public virtual void ShowArea(Action _completed)
+    {
+        CanvasGroup.Open();
+    }
     public virtual void HideArea()
     {
         CanvasGroup.Close();

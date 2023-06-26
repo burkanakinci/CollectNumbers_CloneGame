@@ -9,18 +9,23 @@ public class Entities : CustomBehaviour
     [Header("Scene Objects")]
     [SerializeField] private Transform[] m_DeactiveParents;
     [SerializeField] private Transform[] m_ActiveParents;
+    [SerializeField] private Transform m_CoinPos;
 
     [Header("MatchableTypes")]
     [SerializeField] private MatchableType[] m_MatchableTypes;
 
+    [Header("Finish BG")]
+    [SerializeField] private Sprite[] m_FinishBG;
+
     #region ExternalAccess
     public int BlastableCount => m_BlastedMatchables.Count;
+    public Vector3 CoinScorePos => m_CoinPos.position;
     #endregion
 
     private List<Matchable> m_BlastedMatchables;
 
     #region Events
-    public event Action OnCompleteSpawn;
+    public event Action<bool> OnCompleteSpawn;
     public event Action OnBlastMatchables;
     public event Action<Matchable> OnAddedBlastMatchable;
     public event Action OnCheckBlast;
@@ -42,6 +47,10 @@ public class Entities : CustomBehaviour
     {
         return m_MatchableTypes[_color];
     }
+    public Sprite GetFinishBG(FinishAreaType _finishType)
+    {
+        return m_FinishBG[(int)_finishType];
+    }
     #endregion
     #region Setter
     public void SetBlastedMatchables(ListOperations _operation, Matchable _matchable)
@@ -52,8 +61,8 @@ public class Entities : CustomBehaviour
                 if (!m_BlastedMatchables.Contains(_matchable))
                 {
                     m_BlastedMatchables.Add(_matchable);
-                    OnAddedBlastMatchable?.Invoke(_matchable);
                     OnBlastMatchables += _matchable.BlastMatchable;
+                    OnAddedBlastMatchable?.Invoke(_matchable);
                 }
                 break;
             case ListOperations.Substraction:
@@ -86,7 +95,7 @@ public class Entities : CustomBehaviour
     }
     private IEnumerator BlastMatchablesCoroutine()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSecondsRealtime(0.35f);
         if (m_BlastedMatchables.Count == 0)
         {
             if (GameManager.Instance.LevelManager.RemainingMoveCount <= 0)
@@ -102,14 +111,6 @@ public class Entities : CustomBehaviour
     }
     public void CompleteSpawn()
     {
-        OnCompleteSpawn?.Invoke();
-    }
-    private void ClearBlastedList()
-    {
-        for (int _blasted = 0; _blasted < m_BlastedMatchables.Count; _blasted++)
-        {
-            OnBlastMatchables -= m_BlastedMatchables[_blasted].BlastMatchable;
-        }
-        m_BlastedMatchables.Clear();
+        OnCompleteSpawn?.Invoke(false);
     }
 }

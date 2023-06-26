@@ -136,9 +136,20 @@ public class LevelManager : CustomBehaviour
     {
         ChangeMoveCount(RemainingMoveCount - 1);
     }
-    public void DecreaseTargetMatchable(Matchable _matchable)
+    public void DecreaseTarget(MatchableColor _type)
     {
-
+        for (int _count = 0; _count < CurrentTargetMatchables.Count; _count++)
+        {
+            if (CurrentTargetMatchables[_count].TargetMatchableColor == _type)
+            {
+                CurrentTargetMatchables.Remove(CurrentTargetMatchables[_count]);
+                break;
+            }
+        }
+        if (CurrentTargetMatchables.Count == 0)
+        {
+            GameManager.Instance.LevelSuccess();
+        }
     }
     private void OnDestroy()
     {

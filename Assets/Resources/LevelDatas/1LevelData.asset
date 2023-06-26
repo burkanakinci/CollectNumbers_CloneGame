@@ -67,10 +67,8 @@ MonoBehaviour:
     MatchableYIndis: 0
   TargetMatchables:
   - TargetMatchableColor: 2
-    TargetMatchableCount: 15
-    TargetMatchablePosition: {x: 2, y: 5, z: 0}
+    TargetMatchableCount: 4
   - TargetMatchableColor: 3
-    TargetMatchableCount: 10
-    TargetMatchablePosition: {x: 1, y: 5, z: 0}
+    TargetMatchableCount: 3
   CameraOrtographicSize: 5
   CameraPosition: {x: 1.5, y: 1.5, z: -10}

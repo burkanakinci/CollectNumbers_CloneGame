@@ -1,10 +1,12 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class Player : CustomBehaviour<PlayerManager>
 {
     public PlayerData PlayerData;
     public PlayerStateMachine PlayerStateMachine { get; private set; }
+    public event Action OnIncreaseScore;
     public override void Initialize(PlayerManager _playerManager)
     {
         GameManager.Instance.JsonConverter.LoadPlayerData(ref PlayerData);
@@ -17,8 +19,9 @@ public class Player : CustomBehaviour<PlayerManager>
     }
     public void IncreasePlayerScore(int _score)
     {
-        PlayerData.PlayerScore+=_score;
+        PlayerData.PlayerScore += _score;
         GameManager.Instance.JsonConverter.SavePlayerData(PlayerData);
+        OnIncreaseScore?.Invoke();
     }
     private void Update()
     {

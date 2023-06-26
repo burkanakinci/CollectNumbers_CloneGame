@@ -1,31 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class FailArea : UIArea
 {
-    [SerializeField] private NextLevelButton m_NextLevelButton;
     public override void Initialize(UIPanel _cachedComponent)
     {
+        m_ShowDelayID = GetInstanceID() + "m_ShowDelayID";
         base.Initialize(_cachedComponent);
-        m_NextLevelButton.Initialize(CachedComponent);
     }
+    private string m_ShowDelayID;
     public override void ShowArea()
     {
-        StartShowAreaCoroutine();
-    }
-    private Coroutine m_ShowAreaCoroutine;
-    private void StartShowAreaCoroutine()
-    {
-        if (m_ShowAreaCoroutine != null)
+        DOTween.Kill(m_ShowDelayID);
+        DOVirtual.DelayedCall(0.70f, () =>
         {
-            StopCoroutine(m_ShowAreaCoroutine);
-        }
-        m_ShowAreaCoroutine = StartCoroutine(ShowAreaCoroutine());
+            GameManager.Instance.LevelManager.CleanSceneObject();
+            base.ShowArea();
+        })
+        .SetId(m_ShowDelayID);
     }
-    private IEnumerator ShowAreaCoroutine()
+    public override void HideArea()
     {
-        yield return new WaitForEndOfFrame();
-        base.ShowArea();
+        KillAllTween();
+        base.HideArea();
+    }
+    private void KillAllTween()
+    {
+        DOTween.Kill(m_ShowDelayID);
     }
 }

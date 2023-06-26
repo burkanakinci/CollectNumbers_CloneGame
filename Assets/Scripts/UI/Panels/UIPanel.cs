@@ -30,6 +30,18 @@ public class UIPanel : CustomBehaviour<UIManager>
         CanvasGroup.Open();
         SetCurrentPanel();
     }
+    public virtual void ShowPanel(Action _complete)
+    {
+        CachedComponent.HideAllPanels();
+
+        if (!gameObject.activeInHierarchy)
+        {
+            gameObject.SetActive(true);
+        }
+
+        CanvasGroup.Open();
+        SetCurrentPanel();
+    }
 
     public virtual void HidePanel()
     {

@@ -19,6 +19,7 @@ public class PlayerManager : CustomBehaviour
     private Coroutine m_FinishCoroutine;
     private void StartFinishCoroutine(PlayerStates _state)
     {
+        GameManager.Instance.InputManager.SetCanClickable(false);
         if (m_FinishCoroutine != null)
         {
             StopCoroutine(m_FinishCoroutine);
@@ -27,7 +28,7 @@ public class PlayerManager : CustomBehaviour
     }
     private IEnumerator FinishCoroutine(PlayerStates _state)
     {
-        yield return new WaitForEndOfFrame();
+        yield return new WaitForSecondsRealtime(0.7f);
         Player.PlayerStateMachine.ChangeStateTo(_state);
     }
     #region Events
